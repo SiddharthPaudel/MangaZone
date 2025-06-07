@@ -30,7 +30,7 @@ const HeroSection = () => {
         <img
           src={main}
           alt="Hero"
-          className="max-w-full h-auto rounded-[10px] shadow-lg"
+          className="max-w-full h-auto "
         />
       </div>
     </div>
