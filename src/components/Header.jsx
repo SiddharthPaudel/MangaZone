@@ -38,7 +38,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header style={{ backgroundColor: "#121212" }} font-mon>
+    <header style={{ backgroundColor: "#121212" }} >
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 font-montserrat"
