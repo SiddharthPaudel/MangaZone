@@ -4,6 +4,12 @@ import manga2 from '../images/ble.jpg';
 import manga3 from '../images/saku.jpg';
 import manga4 from '../images/tokyo.jpg';
 import manga5 from '../images/jugo.jpg';
+import manga6 from '../images/berserk.jpeg';
+import manga7 from '../images/castle.jpeg';
+import manga8 from '../images/monster.jpg';
+import manga9 from '../images/vin.webp';
+
+
 import { FaPlay, FaInfoCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const mangas = [
@@ -12,8 +18,10 @@ const mangas = [
   { id: 3, title: 'Sakamoto Days', image: manga3 },
   { id: 4, title: 'Tokyo Revengers', image: manga4 },
   { id: 5, title: 'Dargon', image: manga5 },
-  { id: 5, title: 'Berserk', image: manga5 },
-  { id: 5, title: 'Castlevania', image: manga5 }
+  { id: 6, title: 'Berserk', image: manga6 },
+  { id: 7, title: 'Castlevania', image: manga7 },
+  { id: 8, title: 'Monster', image: manga8 },
+  { id: 9, title: 'Vinland Saga', image: manga9 },
 ];
 
 const MangaCards = () => {
@@ -34,14 +42,14 @@ const MangaCards = () => {
       {/* Arrows */}
       <button
         onClick={() => scroll('left')}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-pink-500 transition"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-yellow-500 transition"
       >
         <FaChevronLeft />
       </button>
 
       <button
         onClick={() => scroll('right')}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-pink-500 transition"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-yellow-500 transition"
       >
         <FaChevronRight />
       </button>
