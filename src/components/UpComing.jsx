@@ -50,7 +50,7 @@ const UpcomingManga = () => {
     className="absolute right-0 bottom-0 h-[260px] object-contain hidden md:block z-0"
   />
 
-  <h2 className="text-3xl text-white font-bold text-center mb-10 z-10 relative">Upcoming Manga Highlights</h2>
+  <h2 className="text-2xl text-white font-bold text-center mb-10 z-10 relative">Upcoming Manga Highlights</h2>
 
   <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 px-4 z-10 relative">
     {mangas.map((manga) => (

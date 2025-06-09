@@ -7,6 +7,7 @@ import HeroSection from './components/HeroSection'
 import MangaCards from './components/MangaCards'
 import UpcomingManga from './components/UpComing'
 import AboutUs from './components/AboutUs'
+import Footer from './components/Footer'
 import './index.css'
 
 
@@ -21,6 +22,7 @@ function App() {
     <Daily/>
     <UpcomingManga/>
     <AboutUs/>
+    <Footer/>
      </>
 
   )

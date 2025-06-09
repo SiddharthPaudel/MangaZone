@@ -14,7 +14,7 @@ const AboutUs = () => {
           transition={{ duration: 0.6 }}
           className="md:w-1/2 text-left"
         >
-          <h2 className="text-4xl font-bold text-pink-400 mb-4"style={{ color: "#f3f3f3" }}>About Manga Zone</h2>
+          <h2 className="text-3xl font-bold text-pink-400 mb-4"style={{ color: "#f3f3f3" }}>About Manga Zone</h2>
           <p className="text-base text-gray-300">
             Manga Zone is your digital manga destination. Read, rent, and enjoy manga with clean visuals and an immersive experience. Whether you're into action, romance, or slice-of-life, we’ve designed it all for manga fans like you.
           </p>
@@ -30,7 +30,7 @@ const AboutUs = () => {
           <img
             src={characterImage}
             alt="Manga Character"
-            className="w-[250px] md:w-[320px] rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+            className="w-[250px] md:w-[320px] rounded-xl  hover:scale-105 transition-transform duration-300"
           />
         </motion.div>
 
