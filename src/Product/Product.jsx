@@ -6,7 +6,7 @@ import manga3 from '../images/saku.jpg';
 import manga4 from '../images/tokyo.jpg';
 import manga5 from '../images/jugo.jpg';
 import manga6 from '../images/berserk.jpeg';
-import MangaCards from "../components/MangaCards";
+import MangaCards from "../MangaCard/MangaCards";
 
 const mangaList = [
   { title: "Japan Summons", genre: "Fantasy", cover: manga1 },
@@ -57,7 +57,7 @@ const Product = () => {
 
         {/* Dropdown */}
         {showFilter && (
-          <div className="absolute right-0 top-12 bg-white border border-gray-300 rounded-md shadow-md z-10 w-48">
+          <div className="absolute right-0 top-12 bg-yellow border border-black-300 rounded-md shadow-md z-10 w-48">
             {genres.map((genre) => (
               <div
                 key={genre}
@@ -65,8 +65,8 @@ const Product = () => {
                   setSelectedGenre(genre === "All Genres" ? "" : genre);
                   setShowFilter(false);
                 }}
-                className={`px-4 py-2 text-sm cursor-pointer hover:bg-purple-100 ${
-                  selectedGenre === genre ? "bg-purple-200" : ""
+                className={`px-4 py-2 text-sm cursor-pointer hover:bg-purple-800 ${
+                  selectedGenre === genre ? "bg-white-200" : ""
                 }`}
               >
                 {genre}
