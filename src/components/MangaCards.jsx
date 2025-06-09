@@ -76,7 +76,7 @@ const MangaCards = () => {
                   className="flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-black rounded-full"
                   style={{ backgroundColor: '#FFC107' }}
                 >
-                  <FaPlay /> Read
+                  <FaPlay  /> Read
                 </button>
                 <button
                   className="flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-white rounded-full"
