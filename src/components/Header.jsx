@@ -45,12 +45,13 @@ const Header = () => {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 font-montserrat"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             {/* <span className="sr-only">Your Company</span> */}
             <div
               className="flex items-center space-x-3 pl-0 ml-0
        "
             >
+             
               <img
                 alt="Site Logo"
                 src={Logo}
@@ -59,8 +60,9 @@ const Header = () => {
               <span className="text-base font-semibold text-white">
                 Manga Zone
               </span>
+             
             </div>
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -104,7 +106,7 @@ const Header = () => {
           </Popover>
 
           <Link
-            to="/products"
+            to="/"
             className="text-base/6 font-semibold"
             style={{ color: "#F3F3F3" }}
           >

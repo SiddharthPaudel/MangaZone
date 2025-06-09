@@ -8,6 +8,7 @@ import manga6 from '../images/berserk.jpeg';
 import manga7 from '../images/castle.jpeg';
 import manga8 from '../images/monster.jpg';
 import manga9 from '../images/vin.webp';
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 import { FaPlay, FaInfoCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -25,35 +26,41 @@ const mangas = [
 ];
 
 const MangaCards = () => {
-  const scrollRef = useRef(null);
+  // const scrollRef = useRef(null);
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 300;
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
+  // const scroll = (direction) => {
+  //   if (scrollRef.current) {
+  //     const scrollAmount = 300;
+  //     scrollRef.current.scrollBy({
+  //       left: direction === 'left' ? -scrollAmount : scrollAmount,
+  //       behavior: 'smooth',
+  //     });
+  //   }
+  // };
+ const scrollRef = useRef(null);
+    const scrollLeft = () => {
+    scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
   };
 
   return (
     <div className="bg-[#121212] px-6 py-12 font-[Montserrat] relative">
       {/* Arrows */}
+       <button
+          onClick={scrollLeft}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full"
+        >
+          <ChevronLeft size={24} />
+        </button>
       <button
-        onClick={() => scroll('left')}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-yellow-500 transition"
-      >
-        <FaChevronLeft />
-      </button>
-
-      <button
-        onClick={() => scroll('right')}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-[#2D2D2D] p-2 rounded-full text-white hover:bg-yellow-500 transition"
-      >
-        <FaChevronRight />
-      </button>
-
+          onClick={scrollRight}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full"
+        >
+          <ChevronRight size={24} />
+        </button>
       {/* Scrollable Row */}
       <div
         ref={scrollRef}
