@@ -19,6 +19,7 @@ function App() {
     <MangaCards/>
     <Daily/>
     <UpcomingManga/>
+    <AboutUs/>
      </>
 
   )
