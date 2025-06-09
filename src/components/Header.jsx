@@ -103,13 +103,13 @@ const Header = () => {
   </PopoverPanel> */}
           </Popover>
 
-          <a
-            href="#"
-            className="text-base/6 font-semibold "
+          <Link
+            to="/products"
+            className="text-base/6 font-semibold"
             style={{ color: "#F3F3F3" }}
           >
             Home
-          </a>
+          </Link>
 
           <a
             href="#"
@@ -119,7 +119,7 @@ const Header = () => {
             AboutUs
           </a>
           <Link
-            to="/Homepage/products"
+            to="/products"
             className="text-base/6 font-semibold"
             style={{ color: "#F3F3F3" }}
           >
