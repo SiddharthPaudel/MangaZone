@@ -11,9 +11,9 @@ const mangas = [
   { id: 2, title: 'Bleach', image: manga2 },
   { id: 3, title: 'Sakamoto Days', image: manga3 },
   { id: 4, title: 'Tokyo Revengers', image: manga4 },
-  { id: 5, title: 'Jujutsu Kaisen', image: manga5 },
-  { id: 5, title: 'Jujutsu Kaisen', image: manga5 },
-  { id: 5, title: 'Jujutsu Kaisen', image: manga5 }
+  { id: 5, title: 'Dargon', image: manga5 },
+  { id: 5, title: 'Berserk', image: manga5 },
+  { id: 5, title: 'Castlevania', image: manga5 }
 ];
 
 const MangaCards = () => {
