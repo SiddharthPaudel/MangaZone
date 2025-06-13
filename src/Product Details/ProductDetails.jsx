@@ -4,6 +4,8 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import manga1 from "../images/naru.jpg";
 import MangaCards from "../MangaCard/MangaCards";
+import { useNavigate } from 'react-router-dom';
+
 
 const dummyManga = {
   id: "1",
@@ -16,8 +18,8 @@ const dummyManga = {
   author: "Oda, Tomohito",
   type: "Manga",
   rating: 4.5,
-//   votes: 7091,
-  rentPrice: "Rs 50"+"/Day",
+  //   votes: 7091,
+  rentPrice: "Rs 50" + "/Day",
 };
 
 const ProductDetails = () => {
@@ -25,6 +27,7 @@ const ProductDetails = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+    const navigate = useNavigate();
 
   const handleBookmark = () => setIsBookmarked((prev) => !prev);
 
@@ -46,8 +49,11 @@ const ProductDetails = () => {
 
             {/* Buttons */}
             <div className="mt-4 flex items-center gap-4">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md text-sm font-medium transition">
-                📖 Read Now
+              <button
+                onClick={() => navigate("/reader")}
+                className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-300"
+              >
+                Read Now
               </button>
               <button className="bg-white text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition">
                 💸 Rent {dummyManga.rentPrice}
@@ -106,9 +112,7 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <p className="text-sm text-gray-400">
-                Give me your Rating?
-              </p>
+              <p className="text-sm text-gray-400">Give me your Rating?</p>
 
               {/* 5-star rating */}
               <div className="mt-3 flex items-center gap-1">
@@ -148,7 +152,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <MangaCards/>
+      <MangaCards />
     </div>
   );
 };

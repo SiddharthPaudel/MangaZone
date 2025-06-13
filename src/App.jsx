@@ -4,6 +4,7 @@ import HomePage from "./Homepage/HomePage";
 import Product from "./Product/Product";
 import './index.css';
 import ProductDetails from "./Product Details/ProductDetails";
+import MangaReader from "./MangaReader/MangaReader";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="products" element={<Product/>} />
           <Route path="productsdetails" element={<ProductDetails/>} />
+          <Route path="reader" element={<MangaReader />} />
+          
 
         </Route>
       </Routes>
