@@ -32,7 +32,7 @@ const ProductDetails = () => {
   const handleBookmark = () => setIsBookmarked((prev) => !prev);
 
   return (
-    <div className="bg-[#121212] text-white min-h-screen px-6 py-10">
+    <div className="bg-[#121212] text-white min-h-screen px-6 py-10 font-montserrat">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
         {/* Left: Cover Image */}
         <img
@@ -51,16 +51,16 @@ const ProductDetails = () => {
             <div className="mt-4 flex items-center gap-4">
               <button
                 onClick={() => navigate("/reader")}
-                className="bg-white text-black px-4 py-2 rounded-md hover:bg-gray-300"
+                className=" text-black px-4 py-2 rounded-md hover:bg-gray-300"  style={{ backgroundColor: '#FFC107' }}
               >
                 Read Now
               </button>
-              <button className="bg-white text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition">
+              <button className=" text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition" style={{ backgroundColor: '#FFC107' }}>
                 💸 Rent {dummyManga.rentPrice}
               </button>
               <button
                 onClick={handleBookmark}
-                className="p-2 bg-[#1e1e1e] rounded-md text-white hover:text-purple-500"
+                className="p-2 bg-[#1e1e1e] rounded-md text-yellow hover:text-purple-500"
               >
                 {isBookmarked ? (
                   <FaBookmark size={20} />
