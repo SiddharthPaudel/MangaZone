@@ -1,106 +1,154 @@
-import { useState } from 'react';
-import { FaBookmark, FaRegBookmark, FaStar, FaRegStar } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import manga1 from '../images/naru.jpg';
+import { useState } from "react";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import manga1 from "../images/naru.jpg";
+import MangaCards from "../MangaCard/MangaCards";
 
 const dummyManga = {
-  id: '1',
-  title: 'Japan Summons',
+  id: "1",
+  title: "Komi Can't Communicate",
+  jpTitle: "古見さんは、コミュ症です。",
   description:
-    'In the Kingdom of Japan, ordinary citizens are summoned to a fantasy world where they must battle evil forces and protect the realm. With epic sword fights and mysterious magic, this manga takes you on a thrilling journey.',
-  genre: 'Fantasy',
+    "It's Shouko Komi’s first day at the prestigious Itan Private High School, and she has already risen to the status of the school’s Madonna. With long black hair and a tall, graceful appearance, she captures the attention of anyone who comes across her. There’s just one problem though—despite her popularity, Komi is terrible at communicating with others.",
+  genre: ["Comedy", "School", "Shounen"],
   cover: manga1,
-  rentPrice: '$2.99',
-  chapters: 45,
-  author: 'Keito Koume',
-  status: 'Ongoing',
-  rating: 4,
-  reviews: 120,
+  author: "Oda, Tomohito",
+  type: "Manga",
+  rating: 4.5,
+//   votes: 7091,
+  rentPrice: "Rs 50"+"/Day",
 };
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
 
   const handleBookmark = () => setIsBookmarked((prev) => !prev);
 
   return (
-    <div className="bg-[#121212] text-white min-h-screen p-6">
-      <div className="max-w-5xl mx-auto bg-[#1e1e1e] rounded-lg shadow-lg p-6 flex flex-col md:flex-row gap-6">
-        {/* Cover Image */}
+    <div className="bg-[#121212] text-white min-h-screen px-6 py-10">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
+        {/* Left: Cover Image */}
         <img
           src={dummyManga.cover}
           alt={dummyManga.title}
-          className="w-full md:w-64 h-auto rounded-lg object-cover shadow-lg"
+          className="w-[220px] h-[330px] rounded-lg shadow-lg object-cover"
         />
 
-        {/* Manga Info */}
-        <div className="flex-1">
-          <div className="flex justify-between items-start">
-            <h1 className="text-3xl font-bold">{dummyManga.title}</h1>
-            <button
-              onClick={handleBookmark}
-              className="transition-colors duration-200 hover:text-[#ffc107]"
-            >
-              {isBookmarked ? (
-                <FaBookmark className="text-[#ffc107] text-2xl" />
-              ) : (
-                <FaRegBookmark className="text-gray-400 text-2xl" />
-              )}
-            </button>
+        {/* Middle: Main Details */}
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <h1 className="text-4xl font-bold">{dummyManga.title}</h1>
+            <p className="text-gray-400 italic mt-1">{dummyManga.jpTitle}</p>
+
+            {/* Buttons */}
+            <div className="mt-4 flex items-center gap-4">
+              <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md text-sm font-medium transition">
+                📖 Read Now
+              </button>
+              <button className="bg-white text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition">
+                💸 Rent {dummyManga.rentPrice}
+              </button>
+              <button
+                onClick={handleBookmark}
+                className="p-2 bg-[#1e1e1e] rounded-md text-white hover:text-purple-500"
+              >
+                {isBookmarked ? (
+                  <FaBookmark size={20} />
+                ) : (
+                  <FaRegBookmark size={20} />
+                )}
+              </button>
+            </div>
+
+            {/* Genre Tags */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {dummyManga.genre.map((tag) => (
+                <span
+                  key={tag}
+                  className="bg-[#2a2a2a] text-sm px-3 py-1 rounded-full text-gray-200"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Description */}
+            <p className="mt-5 text-sm text-gray-300 leading-relaxed">
+              {dummyManga.description}
+            </p>
           </div>
+        </div>
 
-          {/* Rating */}
-          <div className="mt-2 flex items-center text-[#ffc107]">
-            {Array.from({ length: 5 }, (_, i) =>
-              i < dummyManga.rating ? (
-                <FaStar key={i} />
-              ) : (
-                <FaRegStar key={i} />
-              )
-            )}
-            <span className="text-sm text-gray-400 ml-2">
-              ({dummyManga.reviews} reviews)
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="mt-4 text-sm text-gray-300">{dummyManga.description}</p>
-
-          {/* Genre */}
-          <div className="mt-4">
-            <span className="bg-[#ffc107] text-black text-xs px-2 py-1 rounded font-medium">
-              {dummyManga.genre}
-            </span>
-          </div>
-
-          {/* Extra Details */}
-          <ul className="text-sm text-gray-400 mt-4 space-y-1">
+        {/* Right: Minimal Info */}
+        <div className="w-full md:w-72 bg-[#1e1e1e] p-6 rounded-lg shadow-md">
+          <ul className="text-sm text-gray-300 space-y-3">
             <li>
-              <strong>Chapters:</strong> {dummyManga.chapters}
+              <strong>Type:</strong> {dummyManga.type}
             </li>
             <li>
               <strong>Author:</strong> {dummyManga.author}
             </li>
-            <li>
-              <strong>Status:</strong> {dummyManga.status}
-            </li>
           </ul>
 
-          {/* Buttons */}
-          <div className="mt-6 flex gap-4 flex-wrap">
-            <button className="bg-[#ffc107] hover:bg-yellow-400 text-black px-5 py-2 rounded-md transition">
-              Rent for {dummyManga.rentPrice}
-            </button>
-            <button className="bg-white text-black px-5 py-2 rounded-md hover:bg-gray-300 transition">
-              Read Now
-            </button>
-            <button className="bg-gray-800 text-white px-5 py-2 rounded-md hover:bg-gray-700 transition">
-              Watch Trailer
-            </button>
+          {/* Rating */}
+          <div className="mt-6">
+            {/* Rating */}
+            <div className="mt-6">
+              <div className="flex items-center text-[#ffc107] text-xl font-bold mb-1">
+                <FaStar className="mr-1" />
+                {dummyManga.rating}
+                <span className="text-sm text-gray-400 ml-2">
+                  ({dummyManga.votes} voted)
+                </span>
+              </div>
+
+              <p className="text-sm text-gray-400">
+                Give me your Rating?
+              </p>
+
+              {/* 5-star rating */}
+              <div className="mt-3 flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    onClick={() => setUserRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="focus:outline-none"
+                  >
+                    {star <= (hoverRating || userRating) ? (
+                      <FaStar className="text-[#ffc107]" size={24} />
+                    ) : (
+                      <FaRegStar className="text-[#ffc107]" size={24} />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p className="mt-2 text-sm text-gray-400">
+              What do you think about this manga?
+            </p>
+
+            <div className="mt-3 flex gap-2 flex-wrap">
+              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
+                😒 Boring
+              </button>
+              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
+                😊 Great
+              </button>
+              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
+                😍 Amazing
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <MangaCards/>
     </div>
   );
 };
