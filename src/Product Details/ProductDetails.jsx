@@ -152,7 +152,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <MangaCards />
+      {/* <MangaCards /> */}
     </div>
   );
 };
