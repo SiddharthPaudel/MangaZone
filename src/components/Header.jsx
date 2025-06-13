@@ -127,13 +127,13 @@ const Header = () => {
           >
             Manga
           </Link>
-          <a
-            href="#"
+          <Link
+            to='/productsdetails'
             className="text-base/6 font-semibold text-gray-900"
             style={{ color: "#F3F3F3" }}
           >
             Upcoming
-          </a>
+          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
