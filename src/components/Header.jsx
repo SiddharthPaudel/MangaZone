@@ -136,13 +136,13 @@ const Header = () => {
           </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
+          <Link
+            to="signUp"
             className="text-base/6 font-semibold text-gray-900"
             style={{ color: "#F3F3F3" }}
           >
             Join Us <span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
         </div>
       </nav>
       <Dialog

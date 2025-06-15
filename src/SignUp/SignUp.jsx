@@ -1,0 +1,80 @@
+import React from "react";
+
+import animeImage from '../images/pointynaru.png'; 
+import { Link } from "react-router-dom";
+
+const Signup = () => {
+  return (
+    <div className="flex min-h-screen bg-gray-100 justify-center items-start pt-16 px-4"style={{ backgroundColor: "#121212" }}>
+      <form className="bg-[#1e1e1e] rounded-3xl p-8 shadow-lg max-w-4xl w-full flex text-white max-h-[700px] overflow-y-auto">
+        {/* Left side: Image */}
+        <div className="w-1/2 flex items-center justify-center pr-8 border-r border-gray-700">
+          <img
+            src={animeImage}
+            alt="Anime character"
+            className="w-full max-w-sm h-auto object-contain rounded-md"
+          />
+        </div>
+
+        {/* Right side: Form Fields */}
+        <div className="w-1/2 pl-8 flex flex-col justify-center space-y-5">
+          <h2 className="text-3xl font-bold text-purple-500 text-center mb-6">
+            Sign Up
+          </h2>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Name</label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-purple-700 text-white py-2 rounded-md hover:bg-purple-800 transition"
+          >
+            Sign Up
+          </button>
+
+          <p className="mt-6 text-center text-gray-400 text-sm">
+            Already have an account?{" "}
+            <Link to="/login" className="text-purple-500 font-medium hover:underline">
+              Login
+            </Link>
+          </p>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Signup;
