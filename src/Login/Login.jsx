@@ -1,17 +1,17 @@
 import React from "react";
-import animeImage from "../images/sailogin.png"; // Replace with your actual image path
+import animeImage from "../images/smallguy.png"; // Replace with your actual image path
 
 const Login = () => {
   return (
     <div
-      className="flex min-h-screen bg-gray-100 justify-center items-start pt-10 px-4"
+      className="flex min-h-screen bg-gray-100 justify-center items-center px-4"
       style={{ backgroundColor: "#121212" }}
     >
       <form
-        className="bg-[#1e1e1e] rounded-3xl p-8 shadow-lg max-w-4xl w-full flex text-white max-h-[700px]"
+        className="bg-[#1e1e1e] rounded-3xl p-8 shadow-lg max-w-4xl w-full flex text-white h-[580px]"
       >
         {/* Left side: Image */}
-        <div className="w-1/2 flex items-center justify-center pr-8 border-r border-gray-700">
+        <div className="w-1/2 flex items-center justify-center pr-0 border-r border-gray-700">
           <img
             src={animeImage}
             alt="Anime character"
