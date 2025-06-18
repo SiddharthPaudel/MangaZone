@@ -38,51 +38,50 @@ const Bookmark = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white p-6">
+    <div className="min-h-screen bg-[#121212] text-white p-6 font-montserrat">
       <h1 className="text-3xl font-bold mb-6 text-purple-500">My Bookmarks</h1>
 
       {bookmarks.length === 0 ? (
         <p className="text-gray-400">No bookmarks yet.</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[-1px]">
           {bookmarks.map((manga) => (
-            <div
-              key={manga.id}
-              className="relative bg-[#1e1e1e] rounded-xl overflow-hidden shadow-md group"
-            >
-              {/* Manga Cover */}
-              <img
-                src={manga.image}
-                alt={manga.title}
-                className="h-72 w-full object-cover rounded-xl transition duration-300 group-hover:opacity-90"
-              />
+ <div
+  key={manga.id}
+  className="w-[200px] flex flex-col items-center bg-[#1e1e1e] rounded-2xl p-2 relative font-montserrat"
+>
+  {/* Manga Cover */}
+  <div className="relative w-full h-[290px]">
+    <img
+      src={manga.image}
+      alt={manga.title}
+      className="w-full h-full object-cover rounded-xl"
+    />
 
-              {/* Title */}
-              <div className="absolute bottom-0 bg-black bg-opacity-60 w-full text-center p-2">
-                <h2 className="text-sm font-semibold truncate">{manga.title}</h2>
-              </div>
+    {/* Play Button - Top Right */}
+    <button
+      onClick={() => handleRead(manga.id)}
+      className="absolute top-2 right-2 bg-black bg-opacity-60 p-1.5 rounded-full text-yellow-400 hover:text-yellow-300"
+      title="Read"
+    >
+      <FaPlay size={12} />
+    </button>
 
-              {/* Icons Top Right */}
-              <div className="absolute top-2 right-2 flex gap-2">
-                {/* Play */}
-                <button
-                  onClick={() => handleRead(manga.id)}
-                  className="text-yellow-400 hover:text-yellow-300 bg-black bg-opacity-50 p-2 rounded-full"
-                  title="Read"
-                >
-                  <FaPlay size={14} />
-                </button>
+    {/* Close Button - Top Left */}
+    <button
+      onClick={() => handleRemove(manga.id)}
+      className="absolute top-2 left-2 bg-black bg-opacity-60 p-1.5 rounded-full text-red-500 hover:text-red-400"
+      title="Remove"
+    >
+      <FaTimes size={12} />
+    </button>
+  </div>
 
-                {/* Remove */}
-                <button
-                  onClick={() => handleRemove(manga.id)}
-                  className="text-red-500 hover:text-red-400 bg-black bg-opacity-50 p-2 rounded-full"
-                  title="Remove"
-                >
-                  <FaTimes size={14} />
-                </button>
-              </div>
-            </div>
+  {/* Manga Title */}
+  <p className="mt-2 text-white text-sm font-medium text-center truncate w-full">
+    {manga.title}
+  </p>
+</div>
           ))}
         </div>
       )}

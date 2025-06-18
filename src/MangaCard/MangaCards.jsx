@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 import { FaPlay, FaInfoCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import {  useNavigate } from 'react-router-dom';
 
 const mangas = [
   { id: 1, title: 'Naruto', image: manga1 },
@@ -80,8 +81,10 @@ const MangaCards = () => {
               />
               <div className="absolute inset-0 flex flex-col justify-center items-center gap-2 opacity-0 hover:opacity-100 transition-opacity bg-black/40 rounded-lg">
                 <button
+         
                   className="flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-black rounded-full"
                   style={{ backgroundColor: '#FFC107' }}
+                    
                 >
                   <FaPlay  /> Read
                 </button>

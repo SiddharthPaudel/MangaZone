@@ -27,7 +27,7 @@ const ProductDetails = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleBookmark = () => setIsBookmarked((prev) => !prev);
 
@@ -55,7 +55,8 @@ const ProductDetails = () => {
               >
                 Read Now
               </button>
-              <button className=" text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition" style={{ backgroundColor: '#FFC107' }}>
+              <button className=" text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition" style={{ backgroundColor: '#FFC107' }}
+              onClick={() => navigate('/rent')}>
                 💸 Rent {dummyManga.rentPrice}
               </button>
               <button
