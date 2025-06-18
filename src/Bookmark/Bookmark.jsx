@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import manga1 from '../images/naru.jpg';
+import manga2 from '../images/ble.jpg';
+import manga3 from '../images/saku.jpg';
 
 // Dummy bookmark data
 const dummyBookmarks = [
   {
     id: 1,
     title: "Sakamoto Days",
-    image: require("../images/0.webp"),
+    image: manga1,
   },
   {
     id: 2,
     title: "One Piece",
-    image: require("../images/1.webp"),
+    image: manga2,
   },
   {
     id: 3,
     title: "Chainsaw Man",
-    image: require("../images/2.webp"),
+    image: manga3,
   },
 ];
 
