@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import manga1 from '../images/naru.jpg';
-import manga2 from '../images/ble.jpg';
-import manga3 from '../images/saku.jpg';
+import { FaPlay, FaTimes } from "react-icons/fa";
+
+import manga1 from "../images/naru.jpg";
+import manga2 from "../images/ble.jpg";
+import manga3 from "../images/saku.jpg";
 
 // Dummy bookmark data
 const dummyBookmarks = [
@@ -32,7 +34,7 @@ const Bookmark = () => {
   };
 
   const handleRead = (id) => {
-    navigate(`/reader/${id}`); // Adjust if you're using /reader route
+    navigate(`/reader/${id}`);
   };
 
   return (
@@ -42,33 +44,43 @@ const Bookmark = () => {
       {bookmarks.length === 0 ? (
         <p className="text-gray-400">No bookmarks yet.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {bookmarks.map((manga) => (
             <div
               key={manga.id}
-              className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-md flex flex-col"
+              className="relative bg-[#1e1e1e] rounded-xl overflow-hidden shadow-md group"
             >
+              {/* Manga Cover */}
               <img
                 src={manga.image}
                 alt={manga.title}
-                className="h-60 w-full object-cover"
+                className="h-72 w-full object-cover rounded-xl transition duration-300 group-hover:opacity-90"
               />
-              <div className="p-4 flex flex-col justify-between h-full">
-                <h2 className="text-lg font-semibold mb-2">{manga.title}</h2>
-                <div className="flex justify-between mt-auto gap-2">
-                  <button
-                    onClick={() => handleRead(manga.id)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white py-1 px-4 rounded"
-                  >
-                    Read
-                  </button>
-                  <button
-                    onClick={() => handleRemove(manga.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded"
-                  >
-                    Remove
-                  </button>
-                </div>
+
+              {/* Title */}
+              <div className="absolute bottom-0 bg-black bg-opacity-60 w-full text-center p-2">
+                <h2 className="text-sm font-semibold truncate">{manga.title}</h2>
+              </div>
+
+              {/* Icons Top Right */}
+              <div className="absolute top-2 right-2 flex gap-2">
+                {/* Play */}
+                <button
+                  onClick={() => handleRead(manga.id)}
+                  className="text-yellow-400 hover:text-yellow-300 bg-black bg-opacity-50 p-2 rounded-full"
+                  title="Read"
+                >
+                  <FaPlay size={14} />
+                </button>
+
+                {/* Remove */}
+                <button
+                  onClick={() => handleRemove(manga.id)}
+                  className="text-red-500 hover:text-red-400 bg-black bg-opacity-50 p-2 rounded-full"
+                  title="Remove"
+                >
+                  <FaTimes size={14} />
+                </button>
               </div>
             </div>
           ))}

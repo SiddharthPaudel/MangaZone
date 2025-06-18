@@ -113,13 +113,13 @@ const Header = () => {
             Home
           </Link>
 
-          <a
-            href="#"
+          <Link
+            to="/bookmark"
             className="text-base/6 font-semibold "
             style={{ color: "#F3F3F3" }}
           >
             AboutUs
-          </a>
+          </Link>
           <Link
             to="/products"
             className="text-base/6 font-semibold"
