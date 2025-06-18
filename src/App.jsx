@@ -7,6 +7,7 @@ import ProductDetails from "./Product Details/ProductDetails";
 import MangaReader from "./MangaReader/MangaReader";
 import Signup from "./SignUp/SignUp";
 import Login from "./Login/Login";
+import Bookmark from "./Bookmark/Bookmark"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="reader" element={<MangaReader />} />
            <Route path="signUp" element={<Signup />} />
            <Route path="login" element={<Login/>} />
+           <Route path="/bookmark" element={<Bookmark />} />
 
           
 
