@@ -10,6 +10,7 @@ import Login from "./Login/Login";
 import Bookmark from "./Bookmark/Bookmark";
 import RentPage from "./Rent/RentPage";
 import UpdateProfile from "./Profile/UpdateProfile";
+import RentDetails from "./RentDetails/RentDetails";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/bookmark" element={<Bookmark />} />
           <Route path="/rent" element={<RentPage />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
+          <Route path="/rentDetails" element={<RentDetails />} />
 
         </Route>
       </Routes>

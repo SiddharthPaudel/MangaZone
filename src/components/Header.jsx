@@ -15,7 +15,8 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import ProfileIcon from '../icons/profileIcon.png'; // adjust the path as needed
+import ProfileIcon from '../icons/profileIcon.png'; 
+import BookmarkIcon from '../icons/book6.png'; 
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -91,7 +92,7 @@ const Header = () => {
               <img
   src={ProfileIcon}
   alt="Profile"
-  className="h-8 w-8 rounded-full border-2 border-white object-cover"
+  className="h-9 w-9 rounded-full border-2 border-white object-cover"
 />
             </PopoverButton>
             <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
@@ -109,7 +110,7 @@ const Header = () => {
                   Bookmarks
                 </Link>
                 <Link
-                  to="/rent-details"
+                  to="/rentdetails"
                   className="block px-4 py-2 hover:bg-gray-700"
                 >
                   Rent Details
@@ -120,6 +121,13 @@ const Header = () => {
               </div>
             </PopoverPanel>
           </Popover>
+           <Link to="/bookmark" className="ml-6">
+    <img
+      src={BookmarkIcon}
+      alt="Bookmarks"
+      className="h-9 w-9 hover:opacity-80 transition"
+    />
+  </Link>
         </div>
       </nav>
 
