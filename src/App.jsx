@@ -2,13 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import HomePage from "./Homepage/HomePage";
 import Product from "./Product/Product";
-import './index.css';
+import "./index.css";
 import ProductDetails from "./Product Details/ProductDetails";
 import MangaReader from "./MangaReader/MangaReader";
 import Signup from "./SignUp/SignUp";
 import Login from "./Login/Login";
-import Bookmark from "./Bookmark/Bookmark"
-import RentPage from "./Rent/RentPage"
+import Bookmark from "./Bookmark/Bookmark";
+import RentPage from "./Rent/RentPage";
+import UpdateProfile from "./Profile/UpdateProfile";
 
 function App() {
   return (
@@ -16,13 +17,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="products" element={<Product/>} />
-          <Route path="productsdetails" element={<ProductDetails/>} />
+          <Route path="products" element={<Product />} />
+          <Route path="productsdetails" element={<ProductDetails />} />
           <Route path="reader" element={<MangaReader />} />
-           <Route path="signUp" element={<Signup />} />
-           <Route path="login" element={<Login/>} />
-           <Route path="/bookmark" element={<Bookmark />} />
-            <Route path="/rent" element={<RentPage />} />
+          <Route path="signUp" element={<Signup />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/bookmark" element={<Bookmark />} />
+          <Route path="/rent" element={<RentPage />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
 
         </Route>
       </Routes>

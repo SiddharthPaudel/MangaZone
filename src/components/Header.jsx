@@ -1,57 +1,31 @@
-"use client";
 import Logo from "../images/mainlogo.png";
 import { Link } from "react-router-dom";
-
 import { useState } from "react";
 import {
   Dialog,
   DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Popover,
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
 } from "@headlessui/react";
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-
-const products = [{ name: "Shonen" }, { name: "Shoujo" }, { name: "Seinen" }];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import ProfileIcon from '../icons/profileIcon.png'; // adjust the path as needed
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header style={{ backgroundColor: "#121212" }}>
-      <nav
-        aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 font-montserrat"
-      >
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 font-montserrat">
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
-            {/* <span className="sr-only">Your Company</span> */}
-            <div
-              className="flex items-center space-x-3 pl-0 ml-0
-       "
-            >
-             
+            <div className="flex items-center space-x-3 pl-0 ml-0">
               <img
                 alt="Site Logo"
                 src={Logo}
@@ -60,10 +34,10 @@ const Header = () => {
               <span className="text-base font-semibold text-white">
                 Manga Zone
               </span>
-             
             </div>
           </Link>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -78,83 +52,87 @@ const Header = () => {
             />
           </button>
         </div>
+
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
-            {/* <PopoverButton
-    className="flex items-center gap-x-1 text-base/6 font-semibold"
-    style={{ color: '#F3F3F3' }}
-  >
-    Home
-    <ChevronDownIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
-  </PopoverButton> */}
-
-            {/* <PopoverPanel
-    transition
-    className="absolute top-full left-0 z-10 mt-2 w-56 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-  >
-    <div className="py-2">
-      {products.map((item) => (
-        <div
-          key={item.name}
-          className="cursor-pointer px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-        >
-          {item.name}
-        </div>
-      ))}
-    </div>
-  </PopoverPanel> */}
-          </Popover>
-
           <Link
             to="/"
-            className="text-base/6 font-semibold"
+            className="text-base font-semibold"
             style={{ color: "#F3F3F3" }}
           >
             Home
           </Link>
-
           <Link
             to="/bookmark"
-            className="text-base/6 font-semibold "
+            className="text-base font-semibold"
             style={{ color: "#F3F3F3" }}
           >
             AboutUs
           </Link>
           <Link
             to="/products"
-            className="text-base/6 font-semibold"
+            className="text-base font-semibold"
             style={{ color: "#F3F3F3" }}
           >
             Manga
           </Link>
           <Link
-            to='/productsdetails'
-            className="text-base/6 font-semibold text-gray-900"
+            to="/productsdetails"
+            className="text-base font-semibold"
             style={{ color: "#F3F3F3" }}
           >
             Upcoming
           </Link>
         </PopoverGroup>
+
+        {/* Profile Dropdown */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            to="signUp"
-            className="text-base/6 font-semibold text-gray-900"
-            style={{ color: "#F3F3F3" }}
-          >
-            Join Us <span aria-hidden="true">&rarr;</span>
-          </Link>
+          <Popover className="relative">
+            <PopoverButton className="text-white hover:text-gray-300">
+              <img
+  src={ProfileIcon}
+  alt="Profile"
+  className="h-8 w-8 rounded-full border-2 border-white object-cover"
+/>
+            </PopoverButton>
+            <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
+              <div className="py-1 text-sm text-white">
+                <Link
+                  to="/updateProfile"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Update Profile
+                </Link>
+                <Link
+                  to="/bookmark"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Bookmarks
+                </Link>
+                <Link
+                  to="/rent-details"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Rent Details
+                </Link>
+                <button className="w-full text-left px-4 py-2 hover:bg-gray-700">
+                  Logout
+                </button>
+              </div>
+            </PopoverPanel>
+          </Popover>
         </div>
       </nav>
+
+      {/* Mobile menu */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-[#1C1C1C] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-[#1C1C1C] px-6 py-6 sm:max-w-sm">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+            <Link to="/" className="-m-1.5 p-1.5">
               <div className="flex items-center space-x-2 pl-0 ml-0">
                 <img
                   alt="Site Logo"
@@ -165,7 +143,7 @@ const Header = () => {
                   Manga Zone
                 </span>
               </div>
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
@@ -175,72 +153,41 @@ const Header = () => {
               <XMarkIcon aria-hidden="true" className="size-6" />
             </button>
           </div>
-          <div className="mt-6 flow-root" style={{ color: "121212" }}>
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {/* <Disclosure as="div" className="-mx-3">
-  <DisclosureButton
-    className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold hover:bg-gray-700"
-    style={{ color: '#F3F3F3' }}
-  >
-    Types
-    <ChevronDownIcon aria-hidden="true" className="size-5 flex-none group-data-open:rotate-180" />
-  </DisclosureButton>
-  <DisclosurePanel className="mt-2 space-y-2">
-    {[...products].map((item) => (
-      <DisclosureButton
-        key={item.name}
-        as="a"
-        href={item.href}
-        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold hover:bg-gray-700"
-        style={{ color: '#F3F3F3' }}
-      >
-        {item.name}
-      </DisclosureButton>
-    ))}
-  </DisclosurePanel>
-</Disclosure> */}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-700
-"
-                  style={{ color: "#F3F3F3" }}
-                >
-                  Home
-                </a>
 
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-700
-"
-                  style={{ color: "#F3F3F3" }}
-                >
-                  AboutUs
-                </a>
-                <Link
-                  to="/Homepage/products"
-                  className="text-base/6 font-semibold"
-                  style={{ color: "#F3F3F3" }}
-                >
-                  Manga
-                </Link>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-700"
-                  style={{ color: "#F3F3F3" }}
-                >
-                  Upcoming
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-700"
-                  style={{ color: "#F3F3F3" }}
-                >
-                  Log in
-                </a>
-              </div>
+          <div className="mt-6 divide-y divide-gray-700">
+            <div className="flex flex-col space-y-4 py-6">
+              <Link
+                to="/"
+                className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+              >
+                Home
+              </Link>
+              <Link
+                to="/bookmark"
+                className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+              >
+                AboutUs
+              </Link>
+              <Link
+                to="/products"
+                className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+              >
+                Manga
+              </Link>
+              <Link
+                to="/productsdetails"
+                className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+              >
+                Upcoming
+              </Link>
+            </div>
+            <div className="py-6">
+              <Link
+                to="/signUp"
+                className="block rounded-lg px-3 py-2.5 font-semibold text-white hover:bg-gray-700"
+              >
+                Join Us
+              </Link>
             </div>
           </div>
         </DialogPanel>
@@ -248,4 +195,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;
