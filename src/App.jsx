@@ -12,6 +12,9 @@ import RentPage from "./Rent/RentPage";
 import UpdateProfile from "./Profile/UpdateProfile";
 import RentDetails from "./RentDetails/RentDetails";
 import AdminLayout from "./Admin/Layout/AdminLayout";
+import Dashboard from "./Admin/Dashboard/AdminDashboard";
+import AddManga from "./Admin/AddManga/AddManga";
+import AddChapterUI from "./Admin/AddChapter/AddChapter";
 
 function App() {
   return (
@@ -32,9 +35,8 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="products" element={<ProductList />} />
-          <Route path="add-product" element={<AddProduct />} />
-          <Route path="users" element={<UserList />} />
+          <Route path="addmanga" element={<AddManga />} />
+          <Route path="addchapter" element={<AddChapterUI />} />
         </Route>
       </Routes>
     </Router>
