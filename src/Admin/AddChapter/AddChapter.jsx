@@ -6,6 +6,21 @@ const AddChapter = () => {
       <div className="max-w-2xl mx-auto bg-[#1e1e1e] p-8 rounded-xl shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Add New Chapter</h2>
         <form className="space-y-6">
+          {/* Manga Selection */}
+          <div>
+            <label className="block font-semibold mb-1">Select Manga</label>
+            <select
+              className="w-full bg-transparent border border-gray-500 px-4 py-2 rounded-lg text-white focus:outline-none"
+              defaultValue=""
+            >
+              <option value="" disabled>Select manga title</option>
+              <option value="naruto">Naruto</option>
+              <option value="onepiece">One Piece</option>
+              <option value="aot">Attack on Titan</option>
+              {/* Populate dynamically later */}
+            </select>
+          </div>
+
           {/* Chapter Title */}
           <div>
             <label className="block font-semibold mb-1">Chapter Title</label>
