@@ -1,6 +1,9 @@
 import Logo from "../images/mainlogo.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../ContextAPI/Auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Dialog,
   DialogPanel,
@@ -20,6 +23,10 @@ import BookmarkIcon from "../icons/book6.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const { user, logout } = useAuth(); // ✅ from context
+  console.log("User in header:", user);
+
 
   return (
     <header style={{ backgroundColor: "#121212" }}>
@@ -85,56 +92,75 @@ const Header = () => {
           </Link>
         </PopoverGroup>
 
-        {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div> */}
-
+        {/* 🔁 Conditional Rendering (Desktop view) */}
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end gap-4">
-          <Link to="/bookmark">
-            <img
-              src={BookmarkIcon}
-              alt="Bookmarks"
-              className="h-9 w-9 hover:opacity-80 transition"
-            />
-          </Link>
+          {user ? (
+            <>
+              {/* ✅ Bookmark icon always visible */}
+              <Link to="/bookmark">
+                <img
+                  src={BookmarkIcon}
+                  alt="Bookmarks"
+                  className="h-9 w-9 hover:opacity-80 transition"
+                />
+              </Link>
 
-        
-          <Popover className="relative">
-            <PopoverButton className="text-white hover:text-gray-300">
-              <img
-                src={ProfileIcon}
-                alt="Profile"
-                className="h-9 w-9 rounded-full border-2 border-white object-cover"
-              />
-            </PopoverButton>
-            <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
-              <div className="py-1 text-sm text-white">
-                <Link
-                  to="/updateProfile"
-                  className="block px-4 py-2 hover:bg-gray-700"
-                >
-                  Update Profile
-                </Link>
-                <Link
-                  to="/bookmark"
-                  className="block px-4 py-2 hover:bg-gray-700"
-                >
-                  Bookmarks
-                </Link>
-                <Link
-                  to="/rentdetails"
-                  className="block px-4 py-2 hover:bg-gray-700"
-                >
-                  Rent Details
-                </Link>
-                <button className="w-full text-left px-4 py-2 hover:bg-gray-700">
-                  Logout
-                </button>
-              </div>
-            </PopoverPanel>
-          </Popover>
+              {/* ✅ Profile icon, dropdown only on click */}
+              <Popover className="relative">
+                <PopoverButton className="flex items-center space-x-1 text-white hover:text-gray-300 focus:outline-none">
+                  <div className="relative group">
+                    <img
+                      src={ProfileIcon}
+                      alt="Profile"
+                      className="h-9 w-9 rounded-full border-2 border-white object-cover"
+                    />
+                    {user?.name && (
+                      <div className="absolute top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg z-50 whitespace-nowrap">
+                        {user.name}
+                      </div>
+                    )}
+                  </div>
+                  <ChevronDownIcon className="h-5 w-5 text-gray-400" />
+                </PopoverButton>
+                <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
+                  <div className="py-1 text-sm text-white">
+                    <Link
+                      to="/updateProfile"
+                      className="block px-4 py-2 hover:bg-gray-700"
+                    >
+                      Update Profile
+                    </Link>
+                    <Link
+                      to="/bookmark"
+                      className="block px-4 py-2 hover:bg-gray-700"
+                    >
+                      Bookmarks
+                    </Link>
+                    <Link
+                      to="/rentdetails"
+                      className="block px-4 py-2 hover:bg-gray-700"
+                    >
+                      Rent Details
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-700"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </PopoverPanel>
+              </Popover>
+            </>
+          ) : (
+            // 👇 Show Join Us when not logged in
+            <Link
+              to="/signUp"
+              className="text-sm font-semibold text-white hover:text-gray-300"
+            >
+              Join Us <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
 

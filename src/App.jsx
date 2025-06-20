@@ -18,12 +18,14 @@ import AddChapter from "./Admin/AddChapter/AddChapter";
 import UserTable from "./Admin/UserTable/UserTable";
 import RentalTable from "./Admin/Rental/RentalTable";
 import MangaTable from "./Admin/Manga/MangaTable";
+import { ToastContainer } from "react-toastify";
+
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<Product />} />
           <Route path="productsdetails" element={<ProductDetails />} />
