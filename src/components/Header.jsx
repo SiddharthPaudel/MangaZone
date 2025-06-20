@@ -85,54 +85,57 @@ const Header = () => {
           </Link>
         </PopoverGroup>
 
-        {/* Profile Dropdown */}
-      <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end gap-4">
-  {/* Bookmark Icon (left of profile) */}
-  <Link to="/bookmark">
-    <img
-      src={BookmarkIcon}
-      alt="Bookmarks"
-      className="h-9 w-9 hover:opacity-80 transition"
-    />
-  </Link>
+        {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+            Log in <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div> */}
 
-  {/* Profile Icon (farthest right) */}
-  <Popover className="relative">
-    <PopoverButton className="text-white hover:text-gray-300">
-      <img
-        src={ProfileIcon}
-        alt="Profile"
-        className="h-9 w-9 rounded-full border-2 border-white object-cover"
-      />
-    </PopoverButton>
-    <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
-      <div className="py-1 text-sm text-white">
-        <Link
-          to="/updateProfile"
-          className="block px-4 py-2 hover:bg-gray-700"
-        >
-          Update Profile
-        </Link>
-        <Link
-          to="/bookmark"
-          className="block px-4 py-2 hover:bg-gray-700"
-        >
-          Bookmarks
-        </Link>
-        <Link
-          to="/rentdetails"
-          className="block px-4 py-2 hover:bg-gray-700"
-        >
-          Rent Details
-        </Link>
-        <button className="w-full text-left px-4 py-2 hover:bg-gray-700">
-          Logout
-        </button>
-      </div>
-    </PopoverPanel>
-  </Popover>
-</div>
+        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end gap-4">
+          <Link to="/bookmark">
+            <img
+              src={BookmarkIcon}
+              alt="Bookmarks"
+              className="h-9 w-9 hover:opacity-80 transition"
+            />
+          </Link>
 
+        
+          <Popover className="relative">
+            <PopoverButton className="text-white hover:text-gray-300">
+              <img
+                src={ProfileIcon}
+                alt="Profile"
+                className="h-9 w-9 rounded-full border-2 border-white object-cover"
+              />
+            </PopoverButton>
+            <PopoverPanel className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-[#1e1e1e] shadow-lg ring-1 ring-white/10 focus:outline-none">
+              <div className="py-1 text-sm text-white">
+                <Link
+                  to="/updateProfile"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Update Profile
+                </Link>
+                <Link
+                  to="/bookmark"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Bookmarks
+                </Link>
+                <Link
+                  to="/rentdetails"
+                  className="block px-4 py-2 hover:bg-gray-700"
+                >
+                  Rent Details
+                </Link>
+                <button className="w-full text-left px-4 py-2 hover:bg-gray-700">
+                  Logout
+                </button>
+              </div>
+            </PopoverPanel>
+          </Popover>
+        </div>
       </nav>
 
       {/* Mobile menu */}

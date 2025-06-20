@@ -17,6 +17,7 @@ import AddManga from "./Admin/AddManga/AddManga";
 import AddChapter from "./Admin/AddChapter/AddChapter";
 import UserTable from "./Admin/UserTable/UserTable";
 import RentalTable from "./Admin/Rental/RentalTable";
+import MangaTable from "./Admin/Manga/MangaTable";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="addmanga" element={<AddManga />} />
           <Route path="addchapter" element={<AddChapter />} />
           <Route path="rental" element={<RentalTable/>} />
+          <Route path="manga" element={<MangaTable/>} />
 
         </Route>
       </Routes>

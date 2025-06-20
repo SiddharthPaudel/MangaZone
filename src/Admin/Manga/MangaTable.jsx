@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MangaTable = () => {
-  const mangaList = [
+  const [mangaList, setMangaList] = useState([
     {
       id: 1,
       title: "Naruto",
@@ -23,7 +23,72 @@ const MangaTable = () => {
       genre: ["Dark Fantasy", "Action"],
       isRentable: true,
     },
-  ];
+  ]);
+
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedManga, setSelectedManga] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    genre: "",
+    isRentable: true,
+  });
+
+  const handleUpdateClick = (manga) => {
+    setSelectedManga(manga);
+    setFormData({
+      title: manga.title,
+      author: manga.author,
+      genre: manga.genre.join(", "),
+      isRentable: manga.isRentable,
+    });
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+  const handleUpdateSubmit = () => {
+    if (!formData.title || !formData.author || !formData.genre) {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    const updatedManga = {
+      ...selectedManga,
+      title: formData.title,
+      author: formData.author,
+      genre: formData.genre.split(",").map(g => g.trim()).filter(g => g),
+      isRentable: formData.isRentable,
+    };
+
+    setMangaList(prev => 
+      prev.map(manga => 
+        manga.id === selectedManga.id ? updatedManga : manga
+      )
+    );
+
+    setIsUpdateModalOpen(false);
+    setSelectedManga(null);
+    setFormData({ title: "", author: "", genre: "", isRentable: true });
+  };
+
+  const handleCloseModal = () => {
+    setIsUpdateModalOpen(false);
+    setSelectedManga(null);
+    setFormData({ title: "", author: "", genre: "", isRentable: true });
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this manga?")) {
+      setMangaList(prev => prev.filter(manga => manga.id !== id));
+    }
+  };
 
   return (
     <div className="min-h-screen p-8 bg-[#121212] text-white font-[Montserrat]">
@@ -55,10 +120,16 @@ const MangaTable = () => {
                     )}
                   </td>
                   <td className="px-6 py-4 flex justify-center gap-3">
-                    <button className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md text-xs">
+                    <button 
+                      onClick={() => handleUpdateClick(manga)}
+                      className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-md text-xs transition"
+                    >
                       Update
                     </button>
-                    <button className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md text-xs">
+                    <button 
+                      onClick={() => handleDelete(manga.id)}
+                      className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md text-xs transition"
+                    >
                       Delete
                     </button>
                   </td>
@@ -78,6 +149,79 @@ const MangaTable = () => {
           </table>
         </div>
       </div>
+
+      {/* Update Modal */}
+      {isUpdateModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[#1e1e1e] p-6 rounded-2xl w-full max-w-md mx-4 border border-gray-700">
+            <h3 className="text-xl font-bold mb-4">Update Manga</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-[#2c2c2c] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Author</label>
+                <input
+                  type="text"
+                  name="author"
+                  value={formData.author}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-[#2c2c2c] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Genre (comma-separated)
+                </label>
+                <input
+                  type="text"
+                  name="genre"
+                  value={formData.genre}
+                  onChange={handleInputChange}
+                  placeholder="Action, Adventure, Fantasy"
+                  className="w-full px-3 py-2 bg-[#2c2c2c] border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isRentable"
+                  checked={formData.isRentable}
+                  onChange={handleInputChange}
+                  className="mr-2 w-4 h-4 text-blue-600 bg-[#2c2c2c] border-gray-600 rounded focus:ring-blue-500"
+                />
+                <label className="text-sm font-medium">Rentable</label>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={handleUpdateSubmit}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md transition"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={handleCloseModal}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 px-4 rounded-md transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
