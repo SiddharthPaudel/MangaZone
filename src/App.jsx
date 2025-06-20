@@ -11,6 +11,7 @@ import Bookmark from "./Bookmark/Bookmark";
 import RentPage from "./Rent/RentPage";
 import UpdateProfile from "./Profile/UpdateProfile";
 import RentDetails from "./RentDetails/RentDetails";
+import AdminLayout from "./Admin/Layout/AdminLayout";
 
 function App() {
   return (
@@ -27,7 +28,13 @@ function App() {
           <Route path="/rent" element={<RentPage />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/rentDetails" element={<RentDetails />} />
+        </Route>
 
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="products" element={<ProductList />} />
+          <Route path="add-product" element={<AddProduct />} />
+          <Route path="users" element={<UserList />} />
         </Route>
       </Routes>
     </Router>
