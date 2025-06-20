@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 import animeImage from '../images/pointynaru.png'; 
 
 const Signup = () => {
@@ -17,17 +18,8 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  // Loading and error states
+  // Loading state
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: '', type: '' });
-
-  // Show toast notification
-  const showToast = (message, type) => {
-    setToast({ show: true, message, type });
-    setTimeout(() => {
-      setToast({ show: false, message: '', type: '' });
-    }, 4000);
-  };
 
   // Handle input changes
   const handleChange = (e) => {
@@ -41,34 +33,34 @@ const Signup = () => {
   // Form validation
   const validateForm = () => {
     if (!formData.name.trim()) {
-      showToast('Name is required', 'error');
+      toast.error('Name is required');
       return false;
     }
     
     if (!formData.email.trim()) {
-      showToast('Email is required', 'error');
+      toast.error('Email is required');
       return false;
     }
     
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      showToast('Please enter a valid email address', 'error');
+      toast.error('Please enter a valid email address');
       return false;
     }
     
     if (!formData.password) {
-      showToast('Password is required', 'error');
+      toast.error('Password is required');
       return false;
     }
     
     if (formData.password.length < 6) {
-      showToast('Password must be at least 6 characters long', 'error');
+      toast.error('Password must be at least 6 characters long');
       return false;
     }
     
     if (formData.password !== formData.confirmPassword) {
-      showToast('Passwords do not match', 'error');
+      toast.error('Passwords do not match');
       return false;
     }
     
@@ -100,7 +92,7 @@ const Signup = () => {
       const data = await response.json();
       
       if (response.ok) {
-        showToast('Account created successfully! Redirecting to login...', 'success');
+        toast.success('Account created successfully! Redirecting to login...');
         // Reset form
         setFormData({
           name: '',
@@ -113,10 +105,10 @@ const Signup = () => {
           navigate('/login');
         }, 2000);
       } else {
-        showToast(data.msg || data.error || 'Signup failed', 'error');
+        toast.error(data.msg || data.error || 'Signup failed');
       }
     } catch (err) {
-      showToast('Network error. Please check if the server is running.', 'error');
+      toast.error('Network error. Please check if the server is running.');
       console.error('Signup error:', err);
     } finally {
       setLoading(false);
@@ -125,35 +117,46 @@ const Signup = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100 justify-center items-start pt-16 px-4" style={{ backgroundColor: "#121212" }}>
-      {/* Toast Notification */}
-      {toast.show && (
-        <div className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 ${
-          toast.type === 'success' 
-            ? 'bg-green-600 text-white' 
-            : toast.type === 'error' 
-            ? 'bg-red-600 text-white' 
-            : 'bg-blue-600 text-white'
-        }`}>
-          <div className="flex items-center space-x-2">
-            <div className="flex-shrink-0">
-              {toast.type === 'success' ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              ) : toast.type === 'error' ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                </svg>
-              )}
-            </div>
-            <p className="text-sm font-medium">{toast.message}</p>
-          </div>
-        </div>
-      )}
+      {/* React Hot Toast Container */}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: '',
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          // Default options for specific types
+          success: {
+            duration: 4000,
+            style: {
+              background: '#10B981',
+              color: '#fff',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#10B981',
+            },
+          },
+          error: {
+            duration: 4000,
+            style: {
+              background: '#EF4444',
+              color: '#fff',
+            },
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#EF4444',
+            },
+          },
+        }}
+      />
 
       <form onSubmit={handleSubmit} className="bg-[#1e1e1e] rounded-3xl p-8 shadow-lg max-w-4xl w-full flex text-white max-h-[700px] overflow-y-auto">
         {/* Left side: Image */}

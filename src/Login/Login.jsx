@@ -3,7 +3,7 @@ import animeImage from "../images/smallguy.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../ContextAPI/Auth";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const { login } = useAuth();
@@ -25,44 +25,62 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
+    // 🍜 Show loading toast with custom manga-style
+    const loadingToast = toast.loading('Entering the manga verse...', {
+      style: {
+        borderRadius: '12px',
+        background: '#1e1e1e',
+        color: '#fff',
+        border: '1px solid #8b5cf6',
+      },
+    });
+
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
 
       // ✅ Save user/token to context
       login(res.data.token, res.data.user);
 
-      // ✅ Show success toast
-      toast.success("Login successful! Welcome back!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+      // 🎉 Success toast with manga flair
+      toast.success('Welcome back, manga reader! 📚✨', {
+        id: loadingToast, // Replaces the loading toast
+        duration: 4000,
+        style: {
+          borderRadius: '12px',
+          background: '#1e1e1e',
+          color: '#fff',
+          border: '1px solid #10b981',
+        },
+        iconTheme: {
+          primary: '#10b981',
+          secondary: '#1e1e1e',
+        },
       });
 
-      // ✅ Redirect to homepage or dashboard after a short delay
+      // ✅ Redirect after success
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 1500);
 
     } catch (err) {
       console.error(err);
       const errorMessage = err.response?.data?.msg || "Login failed. Please try again.";
       setError(errorMessage);
       
-      // ✅ Show error toast
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+      // ❌ Error toast with manga style
+      toast.error(`Authentication failed! ${errorMessage} 💥`, {
+        id: loadingToast, // Replaces the loading toast
+        duration: 5000,
+        style: {
+          borderRadius: '12px',
+          background: '#1e1e1e',
+          color: '#fff',
+          border: '1px solid #ef4444',
+        },
+        iconTheme: {
+          primary: '#ef4444',
+          secondary: '#1e1e1e',
+        },
       });
     } finally {
       setIsLoading(false);
@@ -136,7 +154,7 @@ const Login = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Logging in...
+                Entering...
               </>
             ) : (
               "Login"

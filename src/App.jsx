@@ -18,7 +18,7 @@ import AddChapter from "./Admin/AddChapter/AddChapter";
 import UserTable from "./Admin/UserTable/UserTable";
 import RentalTable from "./Admin/Rental/RentalTable";
 import MangaTable from "./Admin/Manga/MangaTable";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {

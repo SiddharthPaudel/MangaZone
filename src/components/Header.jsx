@@ -1,9 +1,8 @@
 import Logo from "../images/mainlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../ContextAPI/Auth";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast from 'react-hot-toast'; // ✅ Import React Hot Toast
 import {
   Dialog,
   DialogPanel,
@@ -23,10 +22,67 @@ import BookmarkIcon from "../icons/book6.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate(); // ✅ For navigation after logout
   
   const { user, logout } = useAuth(); // ✅ from context
   console.log("User in header:", user);
 
+  // ✅ Enhanced logout function with toast notifications
+  const handleLogout = () => {
+    // Show loading toast
+    const loadingToast = toast.loading('Logging out...', {
+      style: {
+        borderRadius: '12px',
+        background: '#1e1e1e',
+        color: '#fff',
+        border: '1px solid #8b5cf6',
+      },
+    });
+
+    try {
+      // Call the logout function from context
+      logout();
+      
+      // Show success toast
+      toast.success('Successfully logged out! See you next time! 👋', {
+        id: loadingToast, // Replaces the loading toast
+        duration: 4000,
+        style: {
+          borderRadius: '12px',
+          background: '#1e1e1e',
+          color: '#fff',
+          border: '1px solid #10b981',
+        },
+        iconTheme: {
+          primary: '#10b981',
+          secondary: '#1e1e1e',
+        },
+      });
+
+      // Navigate to home page after logout
+      setTimeout(() => {
+        navigate('/');
+        setMobileMenuOpen(false); // Close mobile menu if open
+      }, 1500);
+
+    } catch (error) {
+      // Show error toast if logout fails
+      toast.error('Logout failed. Please try again.', {
+        id: loadingToast,
+        duration: 4000,
+        style: {
+          borderRadius: '12px',
+          background: '#1e1e1e',
+          color: '#fff',
+          border: '1px solid #ef4444',
+        },
+        iconTheme: {
+          primary: '#ef4444',
+          secondary: '#1e1e1e',
+        },
+      });
+    }
+  };
 
   return (
     <header style={{ backgroundColor: "#121212" }}>
@@ -143,8 +199,8 @@ const Header = () => {
                       Rent Details
                     </Link>
                     <button
-                      onClick={logout}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-700"
+                      onClick={handleLogout} // ✅ Updated to use new logout handler
+                      className="w-full text-left px-4 py-2 hover:bg-gray-700 transition-colors"
                     >
                       Logout
                     </button>
@@ -200,35 +256,84 @@ const Header = () => {
               <Link
                 to="/"
                 className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 to="/bookmark"
                 className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 AboutUs
               </Link>
               <Link
                 to="/products"
                 className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Manga
               </Link>
               <Link
                 to="/productsdetails"
                 className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Upcoming
               </Link>
             </div>
+            
+            {/* ✅ Mobile menu user section */}
             <div className="py-6">
-              <Link
-                to="/signUp"
-                className="block rounded-lg px-3 py-2.5 font-semibold text-white hover:bg-gray-700"
-              >
-                Join Us
-              </Link>
+              {user ? (
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3 px-3">
+                    <img
+                      src={ProfileIcon}
+                      alt="Profile"
+                      className="h-8 w-8 rounded-full border-2 border-white object-cover"
+                    />
+                    <span className="text-white font-semibold">
+                      {user.name || 'User'}
+                    </span>
+                  </div>
+                  <Link
+                    to="/updateProfile"
+                    className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Update Profile
+                  </Link>
+                  <Link
+                    to="/bookmark"
+                    className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Bookmarks
+                  </Link>
+                  <Link
+                    to="/rentdetails"
+                    className="block rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Rent Details
+                  </Link>
+                  <button
+                    onClick={handleLogout} // ✅ Same logout handler for mobile
+                    className="w-full text-left rounded-lg px-3 py-2 font-semibold text-white hover:bg-gray-700 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/signUp"
+                  className="block rounded-lg px-3 py-2.5 font-semibold text-white hover:bg-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Join Us
+                </Link>
+              )}
             </div>
           </div>
         </DialogPanel>
