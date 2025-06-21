@@ -14,7 +14,7 @@ const AdminSidebar = () => {
     { name: "Manga", icon: <FaUsers />, path: "/admin/manga" },
 
 
-    { name: "Logout", icon: <FaSignOutAlt />, path: "/logout" },
+    { name: "Logout", icon: <FaSignOutAlt />, path: "/" },
   ];
 
   return (
