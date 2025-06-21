@@ -16,9 +16,22 @@ import {
   XMarkIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import {
+  GiNinjaHead,
+  GiRobotGolem,
+  GiMaskedSpider,
+  GiSpikedDragonHead,
+} from "react-icons/gi";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ProfileIcon from "../icons/profileIcon.png";
 import BookmarkIcon from "../icons/book6.png";
+const avatarIcons = {
+  1: <GiNinjaHead className="h-9 w-9 text-white" />,
+  2: <GiRobotGolem className="h-9 w-9 text-white" />,
+  3: <GiMaskedSpider className="h-9 w-9 text-white" />,
+  4: <GiSpikedDragonHead className="h-9 w-9 text-white" />,
+};
+
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -165,11 +178,9 @@ const Header = () => {
               <Popover className="relative">
                 <PopoverButton className="flex items-center space-x-1 text-white hover:text-gray-300 focus:outline-none">
                   <div className="relative group">
-                    <img
-                      src={ProfileIcon}
-                      alt="Profile"
-                      className="h-9 w-9 rounded-full border-2 border-white object-cover"
-                    />
+                    <div className="h-9 w-9 rounded-full border-2 border-white bg-gray-800 flex items-center justify-center">
+  {avatarIcons[user?.avatar] || <GiNinjaHead className="h-6 w-6 text-white" />}
+</div>
                     {user?.name && (
                       <div className="absolute top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg z-50 whitespace-nowrap">
                         {user.name}
@@ -288,11 +299,10 @@ const Header = () => {
               {user ? (
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3 px-3">
-                    <img
-                      src={ProfileIcon}
-                      alt="Profile"
-                      className="h-8 w-8 rounded-full border-2 border-white object-cover"
-                    />
+                    <div className="h-8 w-8 rounded-full border-2 border-white bg-gray-800 flex items-center justify-center">
+  {avatarIcons[user?.avatar] || <GiNinjaHead className="h-5 w-5 text-white" />}
+</div>
+
                     <span className="text-white font-semibold">
                       {user.name || 'User'}
                     </span>
