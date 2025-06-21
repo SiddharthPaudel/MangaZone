@@ -4,11 +4,45 @@ import { GiNinjaHead, GiRobotGolem, GiMaskedSpider, GiSpikedDragonHead } from "r
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from "../ContextAPI/Auth";
 import { useNavigate } from "react-router-dom";
+import Avatar1 from "../icons/a1.png"; // Add your avatar images
+import Avatar2 from "../icons/a2.png";
+import Avatar3 from "../icons/a3.png";
+import Avatar4 from "../icons/a4.png";
+import Avatar5 from "../icons/a5.png";
+import Avatar6 from "../icons/a6.png";
+
+
 const avatarIcons = [
-  { id: 1, icon: <GiNinjaHead className="text-4xl" />, label: "Ninja" },
-  { id: 2, icon: <GiRobotGolem className="text-4xl" />, label: "Robot" },
-  { id: 3, icon: <GiMaskedSpider className="text-4xl" />, label: "Spider" },
-  { id: 4, icon: <GiSpikedDragonHead className="text-4xl" />, label: "Dragon" },
+  { 
+    id: 1, 
+    icon: <img src={Avatar1} alt="Ninja Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "Naruto" 
+  },
+  { 
+    id: 2, 
+    icon: <img src={Avatar2} alt="Robot Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "Sasuke" 
+  },
+  { 
+    id: 3, 
+    icon: <img src={Avatar3} alt="Spider Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "kakashi" 
+  },
+  { 
+    id: 4, 
+    icon: <img src={Avatar4} alt="Dragon Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "Sakura" 
+  },
+   { 
+    id: 5, 
+    icon: <img src={Avatar5} alt="Dragon Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "Hinata" 
+  },
+   { 
+    id: 6, 
+    icon: <img src={Avatar6} alt="Dragon Avatar" className="w-12 h-12 rounded-full object-cover" />, 
+    label: "Luffy" 
+  }
 ];
 
 const UpdateProfile = ({ onClose }) => {

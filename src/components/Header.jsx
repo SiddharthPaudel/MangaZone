@@ -25,12 +25,27 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ProfileIcon from "../icons/profileIcon.png";
 import BookmarkIcon from "../icons/book6.png";
+import Avatar1 from "../icons/a1.png"; // Add your avatar images
+import Avatar2 from "../icons/a2.png";
+import Avatar3 from "../icons/a3.png";
+import Avatar4 from "../icons/a4.png";
+import Avatar5 from "../icons/a5.png";
+import Avatar6 from "../icons/a6.png";
+
 const avatarIcons = {
-  1: <GiNinjaHead className="h-9 w-9 text-white" />,
-  2: <GiRobotGolem className="h-9 w-9 text-white" />,
-  3: <GiMaskedSpider className="h-9 w-9 text-white" />,
-  4: <GiSpikedDragonHead className="h-9 w-9 text-white" />,
+  1: <img src={Avatar1} alt="Avatar 1" className="h-9 w-9 rounded-full object-cover" />,
+  2: <img src={Avatar2} alt="Avatar 2" className="h-9 w-9 rounded-full object-cover" />,
+  3: <img src={Avatar3} alt="Avatar 3" className="h-9 w-9 rounded-full object-cover" />,
+  4: <img src={Avatar4} alt="Avatar 4" className="h-9 w-9 rounded-full object-cover" />,
+  5: <img src={Avatar5} alt="Avatar 5" className="h-9 w-9 rounded-full object-cover" />,
+  6: <img src={Avatar6} alt="Avatar 6" className="h-9 w-9 rounded-full object-cover" />,
 };
+// const avatarIcons = {
+//   1: <GiNinjaHead className="h-9 w-9 text-white" />,
+//   2: <GiRobotGolem className="h-9 w-9 text-white" />,
+//   3: <GiMaskedSpider className="h-9 w-9 text-white" />,
+//   4: <GiSpikedDragonHead className="h-9 w-9 text-white" />,
+// };
 
 
 const Header = () => {
