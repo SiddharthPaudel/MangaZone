@@ -154,7 +154,7 @@ const Header = () => {
             Home
           </Link>
           <Link
-            to="/bookmark"
+            to="/aboutus"
             className="text-base font-semibold"
             style={{ color: "#F3F3F3" }}
           >

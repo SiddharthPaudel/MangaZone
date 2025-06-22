@@ -21,12 +21,27 @@ const AddManga = () => {
     }
   });
 
+  // State for image preview
+  const [imagePreview, setImagePreview] = useState(null);
+
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
       setFormData({ ...formData, [name]: checked });
     } else if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
+      const file = files[0];
+      setFormData({ ...formData, [name]: file });
+      
+      // Create image preview
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setImagePreview(null);
+      }
     } else if (name.startsWith("rentalDetails.")) {
       const [parent, child, grandchild] = name.split(".");
       if (grandchild) {
@@ -65,6 +80,17 @@ const AddManga = () => {
       }
     } else {
       setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData({ ...formData, coverImage: null });
+    setImagePreview(null);
+    
+    // Clear the file input
+    const fileInput = document.querySelector('input[type="file"]');
+    if (fileInput) {
+      fileInput.value = '';
     }
   };
 
@@ -151,6 +177,9 @@ const AddManga = () => {
             }
           }
         });
+        
+        // Reset image preview
+        setImagePreview(null);
         
         // Clear the file input
         const fileInput = document.querySelector('input[type="file"]');
@@ -293,10 +322,38 @@ const AddManga = () => {
               type="file"
               name="coverImage"
               onChange={handleChange}
-              className="text-white"
+              className="text-white mb-4"
               accept="image/*"
               required
             />
+            
+            {/* Image Preview Section */}
+            {imagePreview && (
+              <div className="mt-4 p-4 bg-gray-700 rounded-lg border border-gray-600">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="text-sm font-semibold text-yellow-400">Image Preview:</h4>
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="text-red-400 hover:text-red-300 text-sm font-medium transition-colors"
+                  >
+                    Remove Image
+                  </button>
+                </div>
+                <div className="flex justify-center">
+                  <img
+                    src={imagePreview}
+                    alt="Cover preview"
+                    className="max-w-xs max-h-64 object-contain rounded-lg border border-gray-500"
+                  />
+                </div>
+                {formData.coverImage && (
+                  <p className="text-xs text-gray-400 mt-2 text-center">
+                    {formData.coverImage.name} ({(formData.coverImage.size / 1024 / 1024).toFixed(2)} MB)
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           <button

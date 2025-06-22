@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaPlay, FaInfoCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import { useManga } from "../ContextAPI/MangaContext"; // Import the context
 
 const MangaCards = () => {
   const { mangas, loading, error } = useManga(); // Use the context
   const scrollRef = useRef(null);
-  const navigate = null; // You can implement navigation later
+  const navigate = useNavigate(); // Initialize navigate hook
   const [imageErrors, setImageErrors] = useState({}); // Track image loading errors
 
   const scrollLeft = () => {
@@ -19,12 +20,12 @@ const MangaCards = () => {
 
   const handleRead = (mangaId) => {
     console.log('Navigate to read manga:', mangaId);
-    // navigate(`/manga/${mangaId}`);
+    // navigate(`/manga/${mangaId}/read`);
   };
 
   const handleInfo = (mangaId) => {
     console.log('Navigate to manga info:', mangaId);
-    // navigate(`/manga/${mangaId}/info`);
+    navigate(`/manga/${mangaId}`); // Navigate to ProductDetails page
   };
 
   const handleImageError = (mangaId) => {

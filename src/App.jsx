@@ -28,7 +28,7 @@ function App() {
                   <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<Product />} />
-          <Route path="productsdetails" element={<ProductDetails />} />
+          <Route path="/manga/:id" element={<ProductDetails />} />
           <Route path="reader" element={<MangaReader />} />
           <Route path="signUp" element={<Signup />} />
           <Route path="login" element={<Login />} />
