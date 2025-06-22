@@ -7,13 +7,14 @@ import toast from "react-hot-toast";
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth(); // 👈 Get the logged-in user
-  const userId = user?._id;
+  const { user } = useAuth();
+  const userId = user?.id;
 
   const [manga, setManga] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(true);
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -26,6 +27,12 @@ const ProductDetails = () => {
         const data = await res.json();
         setManga(data);
         setIsBookmarked(data.bookmarks?.includes(userId));
+
+        const userRatingData = data.ratings?.find(r => r.userId === userId);
+        if (userRatingData) {
+          setUserRating(userRatingData.rating);
+          setReviewText(userRatingData.review || "");
+        }
       } catch (err) {
         toast.error(err.message);
       } finally {
@@ -33,21 +40,21 @@ const ProductDetails = () => {
       }
     };
 
-    fetchManga();
+    if (userId) {
+      fetchManga();
+    }
   }, [id, userId]);
 
   const handleBookmark = async () => {
-     if (!user) {
-    toast.error("Please log in to bookmark");
-    return;
-  }
+    if (!user) {
+      toast.error("Please log in to bookmark");
+      return;
+    }
 
-  const userId = user.id;  // <--- changed from user._id to user.id
-
-  if (!userId) {
-    toast.error("User ID missing");
-    return;
-  }
+    if (!userId) {
+      toast.error("User ID missing");
+      return;
+    }
 
     try {
       const res = await fetch(`${apiUrl}/api/manga/${manga._id}/bookmark`, {
@@ -65,6 +72,25 @@ const ProductDetails = () => {
       toast.success(data.message);
     } catch (error) {
       toast.error(error.message || "Bookmark failed");
+    }
+  };
+
+  const handleSubmitReview = async () => {
+    try {
+      const res = await fetch(`${apiUrl}/api/manga/rate/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ userId, rating: userRating, review: reviewText })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to submit review");
+
+      toast.success("Review submitted successfully!");
+    } catch (err) {
+      toast.error(err.message || "Review submission failed");
     }
   };
 
@@ -87,20 +113,17 @@ const ProductDetails = () => {
   return (
     <div className="bg-[#121212] text-white min-h-screen px-6 py-10 font-montserrat">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10">
-        {/* Left: Cover Image */}
         <img
           src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
           alt={manga.title}
           className="w-[220px] h-[330px] rounded-lg shadow-lg object-cover"
         />
 
-        {/* Middle: Main Details */}
         <div className="flex-1 flex flex-col justify-between">
           <div>
             <h1 className="text-4xl font-bold">{manga.title}</h1>
             <p className="text-gray-400 italic mt-1">{manga.jpTitle}</p>
 
-            {/* Buttons */}
             <div className="mt-4 flex items-center gap-4">
               <button
                 onClick={() => navigate("/reader")}
@@ -131,7 +154,6 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            {/* Genre Tags */}
             <div className="mt-4 flex flex-wrap gap-2">
               {manga.genre?.map((tag) => (
                 <span
@@ -143,14 +165,12 @@ const ProductDetails = () => {
               ))}
             </div>
 
-            {/* Description */}
             <p className="mt-5 text-sm text-gray-300 leading-relaxed">
               {manga.description}
             </p>
           </div>
         </div>
 
-        {/* Right: Info Box */}
         <div className="w-full md:w-72 bg-[#1e1e1e] p-6 rounded-lg shadow-md">
           <ul className="text-sm text-gray-300 space-y-3">
             <li>
@@ -161,14 +181,13 @@ const ProductDetails = () => {
             </li>
           </ul>
 
-          {/* Rating */}
           <div className="mt-6">
             <div className="flex items-center text-[#ffc107] text-xl font-bold mb-1">
               <FaStar className="mr-1" />
-              {manga.rating ?? "4.5"}
+              {userRating > 0 ? userRating.toFixed(1) : (manga.rating ?? "4.5") }
               <span className="text-sm text-gray-400 ml-2">
-                ({manga.ratings?.length ?? 0} votes)
-              </span>
+  Rate us <span role="img" aria-label="wink">😉</span>
+</span>
             </div>
 
             <p className="text-sm text-gray-400">Give me your Rating?</p>
@@ -190,21 +209,20 @@ const ProductDetails = () => {
               ))}
             </div>
 
-            <p className="mt-2 text-sm text-gray-400">
-              What do you think about this manga?
-            </p>
+            <textarea
+              className="w-full mt-4 p-3 rounded-lg text-sm text-black focus:outline-none resize-none border border-gray-300"
+              rows={4}
+              placeholder="Write your detailed review..."
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></textarea>
 
-            <div className="mt-3 flex gap-2 flex-wrap">
-              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
-                😒 Boring
-              </button>
-              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
-                😊 Great
-              </button>
-              <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
-                😍 Amazing
-              </button>
-            </div>
+            <button
+              onClick={handleSubmitReview}
+              className="mt-3 bg-[#ffc107] text-black px-4 py-2 rounded-md w-full hover:bg-[#e6b800] transition font-semibold"
+            >
+              Submit Review
+            </button>
           </div>
         </div>
       </div>
