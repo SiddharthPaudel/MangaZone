@@ -44,6 +44,37 @@ const ProductDetails = () => {
       fetchManga();
     }
   }, [id, userId]);
+  const handleDeleteReview = async (reviewId) => {
+  if (!userId) {
+    toast.error("User not logged in");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${apiUrl}/api/manga/review/${id}/${reviewId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ userId })
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Delete failed");
+
+    toast.success("Review deleted successfully");
+
+    // Update local state
+    setManga((prev) => ({
+      ...prev,
+      ratings: prev.ratings.filter((r) => r._id !== reviewId)
+    }));
+    setUserRating(0);
+    setReviewText("");
+  } catch (error) {
+    toast.error(error.message || "Failed to delete review");
+  }
+};
 
   const handleBookmark = async () => {
     if (!user) {
@@ -223,6 +254,46 @@ const ProductDetails = () => {
             >
               Submit Review
             </button>
+<div className="mt-8">
+  <h2 className="text-lg font-bold text-white mb-4">User Reviews</h2>
+  {manga.ratings?.length === 0 ? (
+    <p className="text-gray-400">No reviews yet.</p>
+  ) : (
+    <div className="space-y-4 max-h-64 overflow-y-auto pr-2">
+      {manga.ratings.map((review, index) => (
+        <div key={index} className="bg-[#2a2a2a] p-4 rounded-md shadow-md">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-[#ffc107]">
+              {[1, 2, 3, 4, 5].map((i) =>
+                i <= review.rating ? (
+                  <FaStar key={i} size={16} />
+                ) : (
+                  <FaRegStar key={i} size={16} />
+                )
+              )}
+              <span className="ml-2 text-sm text-gray-400">{review.rating.toFixed(1)}</span>
+            </div>
+            {review.userId?._id === userId && (
+              <button
+                onClick={() => handleDeleteReview(review._id)}
+                className="text-red-400 text-xs hover:underline"
+              >
+                Delete
+              </button>
+            )}
+          </div>
+          <p className="text-sm text-gray-200 italic mt-2">"{review.review}"</p>
+          <p className="text-xs text-gray-400 mt-1">
+            — {review.userId?.name || "Unknown User"}
+          </p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
+
           </div>
         </div>
       </div>

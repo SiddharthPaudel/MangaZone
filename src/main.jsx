@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           toastOptions={{
             // Default options for all toasts
             className: '',
-            duration: 4000,
+            duration: 2000,
             style: {
               background: '#1e1e1e',
               color: '#fff',
@@ -32,14 +32,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             
             // Default options for specific types
             success: {
-              duration: 4000,
+              duration: 2000,
               iconTheme: {
                 primary: '#10b981',
                 secondary: '#1e1e1e',
               },
             },
             error: {
-              duration: 5000,
+              duration: 2000,
               iconTheme: {
                 primary: '#ef4444',
                 secondary: '#1e1e1e',
