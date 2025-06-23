@@ -20,7 +20,7 @@ const MangaCards = () => {
 
   const handleRead = (mangaId) => {
     console.log('Navigate to read manga:', mangaId);
-    // navigate(`/manga/${mangaId}/read`);
+    navigate(`/manga/${mangaId}/read`);
   };
 
   const handleInfo = (mangaId) => {

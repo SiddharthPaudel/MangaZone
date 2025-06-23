@@ -7,32 +7,20 @@ import {
   FaExchangeAlt,
   FaExpand,
   FaCompress,
-  FaRegBookmark
+  FaRegBookmark,
+  FaBookmark as FaBookmarkFilled
 } from "react-icons/fa";
-
-import manga1 from "../images/0.webp";
-import manga2 from "../images/1.webp";
-import manga3 from "../images/2.webp";
-import manga4 from "../images/3.webp";
-
-const dummyPages = [
-  { image: manga1 },
-  { image: manga2 },
-  { image: manga3 },
-  { image: manga4 },
-];
-
-const dummyInfo = {
-  title: "Sakamoto Days",
-  genres: ["Comedy", "Slice of Life", "Mafia"], // Not displayed now
-};
 
 const MangaReader = () => {
   const { id } = useParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("vertical");
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [showComments, setShowComments] = useState(false); // <-- added
+  const [showComments, setShowComments] = useState(false);
+  const [chapterImages, setChapterImages] = useState([]);
+  const [mangaTitle, setMangaTitle] = useState("Loading...");
+
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleBookmark = () => setIsBookmarked((prev) => !prev);
 
@@ -62,11 +50,40 @@ const MangaReader = () => {
     };
   }, []);
 
+  // ✅ Fetch real manga & chapter images
+  useEffect(() => {
+    const fetchManga = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/manga/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch manga");
+        const data = await res.json();
+
+        setMangaTitle(data.title);
+
+        const lastChapter = data.chapters[data.chapters.length - 1];
+
+        if (lastChapter?.imageUrls?.length > 0) {
+          const fullUrls = lastChapter.imageUrls.map(
+            (imgPath) => `${apiUrl}/uploads/chapters/${imgPath}`
+          );
+          setChapterImages(fullUrls);
+        } else {
+          setChapterImages([]);
+        }
+      } catch (err) {
+        console.error("Error fetching manga:", err);
+        setMangaTitle("Failed to load");
+      }
+    };
+
+    fetchManga();
+  }, [id]);
+
   return (
     <div className="flex bg-[#121212] min-h-screen text-white relative">
       {/* Sidebar */}
       <aside className="w-64 p-6 bg-[#1e1e1e] hidden md:flex flex-col sticky top-0 h-screen">
-        <h2 className="text-xl font-semibold">{dummyInfo.title}</h2>
+        <h2 className="text-xl font-semibold">{mangaTitle}</h2>
 
         {/* Scroll Switch Button */}
         <button
@@ -100,7 +117,7 @@ const MangaReader = () => {
         {/* Bottom Buttons */}
         <div className="flex flex-col gap-4 mb-6 mt-auto">
           <button
-            onClick={() => setShowComments(true)} // <-- opens comment section
+            onClick={() => setShowComments(true)}
             className="flex items-center gap-2 hover:text-[#ffc107]"
           >
             <FaCommentDots className="text-[#ffc107]" />
@@ -116,7 +133,7 @@ const MangaReader = () => {
             onClick={handleBookmark}
             className="flex items-center gap-2 text-purple hover:text-[#ffc107]"
           >
-            {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
+            {isBookmarked ? <FaBookmarkFilled /> : <FaRegBookmark />}
             <span>Bookmark</span>
           </button>
         </div>
@@ -130,18 +147,24 @@ const MangaReader = () => {
             : "space-y-4 overflow-y-auto"
         }`}
       >
-        {dummyPages.map((page, idx) => (
-          <img
-            key={idx}
-            src={page.image}
-            alt={`Page ${idx + 1}`}
-            className={`rounded shadow-md object-contain ${
-              scrollDirection === "horizontal"
-                ? "w-[75%] min-w-[450px] max-w-[700px]"
-                : "w-full max-w-4xl mx-auto"
-            }`}
-          />
-        ))}
+        {chapterImages.length === 0 ? (
+          <p className="text-gray-400 text-center w-full mt-10">
+            No chapter pages available.
+          </p>
+        ) : (
+          chapterImages.map((src, idx) => (
+            <img
+              key={idx}
+              src={src}
+              alt={`Page ${idx + 1}`}
+              className={`rounded shadow-md object-contain ${
+                scrollDirection === "horizontal"
+                  ? "w-[75%] min-w-[450px] max-w-[700px]"
+                  : "w-full max-w-4xl mx-auto"
+              }`}
+            />
+          ))
+        )}
       </main>
 
       {/* Comment Section (Right Panel) */}
@@ -159,7 +182,6 @@ const MangaReader = () => {
 
           <div className="space-y-4 max-h-[80vh] overflow-y-auto">
             <div className="text-sm text-gray-400">No comments yet.</div>
-            {/* Future: map over actual comments */}
           </div>
 
           <div className="mt-4">

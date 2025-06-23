@@ -1,11 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
 const UserTable = () => {
-  const users = [
-    { id: 1, username: 'siddhartha', email: 'siddhartha@example.com' },
-    { id: 2, username: 'john_doe', email: 'john@example.com' },
-    { id: 3, username: 'jane_smith', email: 'jane@example.com' },
-  ];
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${apiUrl}/api/auth`);
+        if (!res.ok) throw new Error("Failed to fetch users");
+        const data = await res.json();
+        setUsers(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [apiUrl]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white bg-[#121212] font-[Montserrat]">
+        Loading users...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500 bg-[#121212] font-[Montserrat]">
+        Error: {error}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#121212] text-white p-8 font-[Montserrat]">
@@ -22,22 +56,23 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-700">
-              {users.map((user, index) => (
-                <tr
-                  key={user.id}
-                  className="hover:bg-[#292929] transition duration-200"
-                >
-                  <td className="px-6 py-4 font-medium text-gray-200">{index + 1}</td>
-                  <td className="px-6 py-4">{user.username}</td>
-                  <td className="px-6 py-4">{user.email}</td>
-                </tr>
-              ))}
-              {users.length === 0 && (
+              {users.length === 0 ? (
                 <tr>
                   <td colSpan="3" className="px-6 py-6 text-center text-gray-500">
                     No users found.
                   </td>
                 </tr>
+              ) : (
+                users.map((user, index) => (
+                  <tr
+                    key={user._id}
+                    className="hover:bg-[#292929] transition duration-200"
+                  >
+                    <td className="px-6 py-4 font-medium text-gray-200">{index + 1}</td>
+                    <td className="px-6 py-4">{user.name}</td>
+                    <td className="px-6 py-4">{user.email}</td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>

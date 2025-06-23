@@ -18,6 +18,7 @@ import AddChapter from "./Admin/AddChapter/AddChapter";
 import UserTable from "./Admin/UserTable/UserTable";
 import RentalTable from "./Admin/Rental/RentalTable";
 import MangaTable from "./Admin/Manga/MangaTable";
+
 import { Toaster } from 'react-hot-toast';
 
 
@@ -29,7 +30,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="products" element={<Product />} />
           <Route path="/manga/:id" element={<ProductDetails />} />
-          <Route path="reader" element={<MangaReader />} />
+         <Route path="/manga/:id/read" element={<MangaReader />} />
           <Route path="signUp" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route path="/bookmark" element={<Bookmark />} />
@@ -44,6 +45,7 @@ function App() {
           <Route path="addchapter" element={<AddChapter />} />
           <Route path="rental" element={<RentalTable/>} />
           <Route path="manga" element={<MangaTable/>} />
+          <Route path="usertable" element={<UserTable/>} />
 
         </Route>
       </Routes>
