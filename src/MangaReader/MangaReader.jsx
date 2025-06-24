@@ -8,11 +8,62 @@ import {
   FaExpand,
   FaCompress,
   FaRegBookmark,
-  FaBookmark as FaBookmarkFilled
+  FaBookmark as FaBookmarkFilled,
 } from "react-icons/fa";
 import { useAuth } from "../ContextAPI/Auth";
 import toast from "react-hot-toast";
+import Avatar1 from "../icons/a1.png";
+import Avatar2 from "../icons/a2.png";
+import Avatar3 from "../icons/a3.png";
+import Avatar4 from "../icons/a4.png";
+import Avatar5 from "../icons/a5.png";
+import Avatar6 from "../icons/a6.png";
+import { useNavigate } from "react-router-dom";
 
+const avatarIcons = {
+  1: (
+    <img
+      src={Avatar1}
+      alt="Avatar 1"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  2: (
+    <img
+      src={Avatar2}
+      alt="Avatar 2"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  3: (
+    <img
+      src={Avatar3}
+      alt="Avatar 3"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  4: (
+    <img
+      src={Avatar4}
+      alt="Avatar 4"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  5: (
+    <img
+      src={Avatar5}
+      alt="Avatar 5"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  6: (
+    <img
+      src={Avatar6}
+      alt="Avatar 6"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+};
 const MangaReader = () => {
   const { id } = useParams();
   const { user } = useAuth();
@@ -24,6 +75,8 @@ const MangaReader = () => {
   const [mangaTitle, setMangaTitle] = useState("Loading...");
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const navigate = useNavigate();
+
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -89,7 +142,7 @@ const MangaReader = () => {
       const res = await fetch(`${apiUrl}/api/manga/${id}/bookmark`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id })
+        body: JSON.stringify({ userId: user.id }),
       });
 
       const data = await res.json();
@@ -109,7 +162,12 @@ const MangaReader = () => {
       const res = await fetch(`${apiUrl}/api/manga/${id}/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, username: user.name, text: newComment })
+        body: JSON.stringify({
+          userId: user.id,
+          username: user.name,
+          text: newComment,
+          avatar: user.avatar,
+        }),
       });
 
       const data = await res.json();
@@ -127,14 +185,17 @@ const MangaReader = () => {
     if (!user) return toast.error("Please log in to delete comment.");
 
     try {
-      const res = await fetch(`${apiUrl}/api/manga/${id}/comment/${commentId}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id })
-      });
+      const res = await fetch(
+        `${apiUrl}/api/manga/${id}/comment/${commentId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: user.id }),
+        }
+      );
 
       const data = await res.json();
-      setComments(data.comments);  // expects updated comments array here
+      setComments(data.comments); // expects updated comments array here
       if (!res.ok) throw new Error(data.message || "Failed to delete comment");
 
       setComments(data.comments);
@@ -148,75 +209,156 @@ const MangaReader = () => {
     <div className="flex bg-[#121212] min-h-screen text-white relative">
       <aside className="w-64 p-6 bg-[#1e1e1e] hidden md:flex flex-col sticky top-0 h-screen">
         <h2 className="text-xl font-semibold">{mangaTitle}</h2>
-        <button onClick={toggleScroll} className="mt-6 flex items-center gap-2 text-sm bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-2 rounded">
+        <button
+          onClick={toggleScroll}
+          className="mt-6 flex items-center gap-2 text-sm bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-2 rounded"
+        >
           <FaExchangeAlt className="text-[#ffc107]" />
-          {scrollDirection === "vertical" ? "Switch to Horizontal" : "Switch to Vertical"}
+          {scrollDirection === "vertical"
+            ? "Switch to Horizontal"
+            : "Switch to Vertical"}
         </button>
-        <button onClick={toggleFullScreen} className="mt-3 flex items-center gap-2 text-sm bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-2 rounded">
-          {isFullScreen ? (<><FaCompress className="text-[#ffc107]" /> Exit Full Screen</>) : (<><FaExpand className="text-[#ffc107]" /> Full Screen</>)}
+        <button
+          onClick={toggleFullScreen}
+          className="mt-3 flex items-center gap-2 text-sm bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-2 rounded"
+        >
+          {isFullScreen ? (
+            <>
+              <FaCompress className="text-[#ffc107]" /> Exit Full Screen
+            </>
+          ) : (
+            <>
+              <FaExpand className="text-[#ffc107]" /> Full Screen
+            </>
+          )}
         </button>
         <div className="flex flex-col gap-4 mb-6 mt-auto">
-          <button onClick={() => setShowComments(true)} className="flex items-center gap-2 hover:text-[#ffc107]">
-            <FaCommentDots className="text-[#ffc107]" /><span>Comments</span>
+          <button
+            onClick={() => setShowComments(true)}
+            className="flex items-center gap-2 hover:text-[#ffc107]"
+          >
+            <FaCommentDots className="text-[#ffc107]" />
+            <span>Comments</span>
           </button>
-          <button className="flex items-center gap-2 hover:text-[#ffc107]">
-            <FaInfoCircle className="text-[grey]" /><span>Info</span>
-          </button>
-          <button onClick={handleBookmark} className="flex items-center gap-2 text-purple hover:text-[#ffc107]">
-            {isBookmarked ? <FaBookmarkFilled /> : <FaRegBookmark />}<span>Bookmark</span>
+          <button
+  onClick={() => navigate(`/manga/${id}`)} // navigate to Product Details page
+  className="flex items-center gap-2 hover:text-[#ffc107]"
+>
+  <FaInfoCircle className="text-[grey]" />
+  <span>Info</span>
+</button>
+
+          <button
+            onClick={handleBookmark}
+            className="flex items-center gap-2 text-purple hover:text-[#ffc107]"
+          >
+            {isBookmarked ? <FaBookmarkFilled /> : <FaRegBookmark />}
+            <span>Bookmark</span>
           </button>
         </div>
       </aside>
 
-      <main className={`flex-1 p-4 ${scrollDirection === "horizontal" ? "flex gap-4 overflow-x-auto" : "space-y-4 overflow-y-auto"}`}>
+      <main
+        className={`flex-1 p-4 ${
+          scrollDirection === "horizontal"
+            ? "flex gap-4 overflow-x-auto"
+            : "space-y-4 overflow-y-auto"
+        }`}
+      >
         {chapterImages.length === 0 ? (
-          <p className="text-gray-400 text-center w-full mt-10">No chapter pages available.</p>
+          <p className="text-gray-400 text-center w-full mt-10">
+            No chapter pages available.
+          </p>
         ) : (
           chapterImages.map((src, idx) => (
             <img
               key={idx}
               src={src}
               alt={`Page ${idx + 1}`}
-              className={`rounded shadow-md object-contain ${scrollDirection === "horizontal" ? "w-[75%] min-w-[450px] max-w-[700px]" : "w-full max-w-4xl mx-auto"}`}
+              className={`rounded shadow-md object-contain ${
+                scrollDirection === "horizontal"
+                  ? "w-[75%] min-w-[450px] max-w-[700px]"
+                  : "w-full max-w-4xl mx-auto"
+              }`}
             />
           ))
         )}
       </main>
 
       {showComments && (
-        <div className="fixed top-0 right-0 w-80 h-full bg-[#1e1e1e] p-4 z-50 shadow-lg border-l border-gray-800">
+        <div className="fixed top-0 right-0 w-80 h-full bg-[#1e1e1e] p-4 z-50 shadow-lg border-l border-gray-800 flex flex-col">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">Comments</h3>
-            <button onClick={() => setShowComments(false)} className="text-gray-400 hover:text-white">✕</button>
+            <button
+              onClick={() => setShowComments(false)}
+              className="text-gray-400 hover:text-white text-xl font-bold"
+              aria-label="Close comments"
+            >
+              &times;
+            </button>
           </div>
 
-          <div className="space-y-4 max-h-[80vh] overflow-y-auto">
+          <div className="flex-1 overflow-y-auto space-y-4 pr-2">
             {comments.length === 0 ? (
               <p className="text-sm text-gray-400">No comments yet.</p>
             ) : (
               comments.map((comment) => (
-                <div key={comment._id} className="bg-[#2a2a2a] p-3 rounded shadow">
-                  <div className="flex justify-between">
-                    <span className="text-sm font-semibold text-white">{comment.username}</span>
-                    {comment.userId === user?.id && (
-                      <button onClick={() => handleDeleteComment(comment._id)} className="text-xs text-red-400 hover:underline">Delete</button>
-                    )}
+                <div
+                  key={comment._id}
+                  className="flex items-start gap-3 bg-[#2a2a2a] p-3 rounded shadow"
+                >
+                  {/* User Avatar */}
+                  {avatarIcons[comment.avatar] || (
+  <div className="w-10 h-10 rounded-full bg-[#444] flex items-center justify-center text-white font-semibold uppercase">
+    {comment.username ? comment.username.charAt(0) : "U"}
+  </div>
+)}
+
+
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-semibold text-white">
+                        {comment.username || "Unknown User"}
+                      </span>
+                      {comment.userId === user?.id && (
+                        <button
+                          onClick={() => handleDeleteComment(comment._id)}
+                          className="text-xs text-red-400 hover:underline"
+                          aria-label="Delete comment"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-gray-300 text-sm mt-1 whitespace-pre-wrap">
+                      {comment.text}
+                    </p>
                   </div>
-                  <p className="text-gray-300 text-sm mt-1">{comment.text}</p>
                 </div>
               ))
             )}
           </div>
 
-          <div className="mt-4">
+          {/* New Comment Box */}
+          <div className="mt-4 pt-4 border-t border-gray-700">
             <textarea
-              className="w-full bg-[#2a2a2a] p-2 text-sm text-white rounded resize-none"
+              className="w-full bg-[#2a2a2a] p-3 text-sm text-white rounded resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
               placeholder="Write a comment..."
               rows={3}
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             ></textarea>
-            <button onClick={handlePostComment} className="mt-2 bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded text-sm">Post Comment</button>
+            <button
+              onClick={handlePostComment}
+              disabled={newComment.trim() === ""}
+              className={`mt-2 w-full py-2 rounded text-black font-semibold transition ${
+                newComment.trim() === ""
+                  ? "bg-yellow-300 cursor-not-allowed"
+                  : "bg-yellow-400 hover:bg-yellow-300"
+              }`}
+            >
+              Post Comment
+            </button>
           </div>
         </div>
       )}
