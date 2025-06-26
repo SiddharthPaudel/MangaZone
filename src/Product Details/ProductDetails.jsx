@@ -159,9 +159,24 @@ const ProductDetails = () => {
 
             <div className="mt-4 flex items-center gap-4">
               <button onClick={() => navigate("/reader")} className="text-black px-4 py-2 rounded-md hover:bg-gray-300" style={{ backgroundColor: "#FFC107" }}>Read Now</button>
-              <button onClick={() => navigate("/rent")} className="text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition" style={{ backgroundColor: "#FFC107" }}>
-                💸 Rent Rs {manga.rentalDetails?.price ?? "N/A"}/{manga.rentalDetails?.duration?.unit ?? "day"}
-              </button>
+              <button
+  onClick={() =>
+    navigate("/rent", {
+      state: {
+        mangaId: manga._id,
+        title: manga.title,
+        coverImage: manga.coverImage,
+        pricePerDay: manga.rentalDetails?.price,
+        durationUnit: manga.rentalDetails?.duration?.unit || "days",
+      },
+    })
+  }
+  className="text-black px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-300 transition"
+  style={{ backgroundColor: "#FFC107" }}
+>
+  💸 Rent Rs {manga.rentalDetails?.price ?? "N/A"}/{manga.rentalDetails?.duration?.unit ?? "day"}
+</button>
+
               <button onClick={handleBookmark} className="p-2 bg-[#1e1e1e] rounded-md text-yellow hover:text-purple-500">
                 {isBookmarked ? <FaBookmark size={20} /> : <FaRegBookmark size={20} />}
               </button>
