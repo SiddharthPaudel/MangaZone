@@ -18,6 +18,8 @@ import AddChapter from "./Admin/AddChapter/AddChapter";
 import UserTable from "./Admin/UserTable/UserTable";
 import RentalTable from "./Admin/Rental/RentalTable";
 import MangaTable from "./Admin/Manga/MangaTable";
+import ProtectedAdminRoute from "./utils/ProtectedAdminRoutes";
+import Unauthorized from "./utils/Unauthorize";
 
 import { Toaster } from 'react-hot-toast';
 
@@ -39,7 +41,11 @@ function App() {
           <Route path="/rentDetails" element={<RentDetails />} />
         </Route>
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={
+            <ProtectedAdminRoute>
+              <AdminLayout />
+            </ProtectedAdminRoute>
+          }>
           <Route index element={<Dashboard />} />
           <Route path="addmanga" element={<AddManga />} />
           <Route path="addchapter" element={<AddChapter />} />
@@ -48,7 +54,9 @@ function App() {
           <Route path="usertable" element={<UserTable/>} />
 
         </Route>
+        <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
+       
     </Router>
   );
 }

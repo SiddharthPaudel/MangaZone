@@ -34,6 +34,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  
 
   useEffect(() => {
     const fetchManga = async () => {
@@ -158,7 +159,13 @@ const ProductDetails = () => {
             <p className="text-gray-400 italic mt-1">{manga.jpTitle}</p>
 
             <div className="mt-4 flex items-center gap-4">
-              <button onClick={() => navigate("/reader")} className="text-black px-4 py-2 rounded-md hover:bg-gray-300" style={{ backgroundColor: "#FFC107" }}>Read Now</button>
+             <button
+  onClick={() => navigate(`/manga/${manga._id}/read`)}
+  className="text-black px-4 py-2 rounded-md hover:bg-gray-300"
+  style={{ backgroundColor: "#FFC107" }}
+>
+  Read Now
+</button>
               <button
   onClick={() =>
     navigate("/rent", {
