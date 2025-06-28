@@ -78,99 +78,89 @@ const Product = () => {
           </div>
         </div>
       </div>
-
+<MangaCards/>
       {/* Content */}
       <div className="px-6">
         <div className="max-w-6xl mx-auto">
           {/* MangaCards */}
           <div className="mb-12">
-            <MangaCards />
+           
           </div>
 
           {/* Latest Updates & Most Viewed */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Latest Updates */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center gap-4 mb-6">
-                <h2 className="text-xl text-white">Latest Updates</h2>
-                <div className="flex gap-2">
-                  <button className="bg-purple-600 text-white px-4 py-1 text-sm">Chapter</button>
-                  <button className="text-gray-400 px-4 py-1 text-sm hover:text-white">Volume</button>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {topRated.slice(0, 4).map((manga, index) => (
-                  <div key={manga._id} className="bg-[#1a1a1a] rounded-lg p-8 flex gap-6">
-                    <div className="relative flex-shrink-0">
-                      <img
-                        src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
-                        alt={manga.title}
-                        className="w-28 h-36 object-cover rounded"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white text-lg font-medium mb-4">{manga.title}</h3>
-                      <div className="text-base text-gray-400 mb-5">
-                        {manga.genre?.slice(0, 3).join(', ')}
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-purple-400 text-base">📖</span>
-                          <span className="text-purple-400 text-base">Chap {47 - index} [EN]</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-purple-400 text-base">📖</span>
-                          <span className="text-purple-400 text-base">Chap {46 - index} [EN]</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-purple-400 text-base">📖</span>
-                          <span className="text-purple-400 text-base">Chap {45 - index} [EN]</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* Latest Updates & Most Viewed */}
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 font-montserrat">
+  {/* Latest Updates */}
+  <div className="lg:col-span-2">
+    <div className="flex items-center gap-4 mb-6">
+      <h2 className="text-xl text-white font-semibold">Latest Updates</h2>
+      <div className="flex gap-2">
+        <button className="bg-purple-600 text-white px-4 py-1 text-sm rounded">Chapter</button>
+        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Volume</button>
+      </div>
+    </div>
 
-            {/* Most Viewed */}
-            <div>
-              <div className="mb-6">
-                <h2 className="text-xl text-white mb-4">Most Viewed</h2>
-                <div className="flex gap-2">
-                  <button className="bg-purple-600 text-white px-4 py-1 text-sm">Today</button>
-                  <button className="text-gray-400 px-4 py-1 text-sm hover:text-white">Week</button>
-                  <button className="text-gray-400 px-4 py-1 text-sm hover:text-white">Month</button>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {topRated.slice(0, 4).map((manga, index) => (
+        <div key={manga._id} className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-lg flex gap-5 p-5">
+          <img
+            src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
+            alt={manga.title}
+            className="w-28 h-40 object-cover rounded-xl"
+          />
+          <div className="flex-1">
+            <h3 className="text-white text-lg font-semibold mb-2">{manga.title}</h3>
+            <p className="text-sm text-gray-400 mb-3">{manga.genre?.slice(0, 3).join(", ")}</p>
+            <div className="space-y-2">
+              {[0, 1, 2].map((offset) => (
+                <div key={offset} className="flex items-center gap-2 text-purple-400 text-sm">
+                  <span>📖 Chap {47 - index - offset} [EN]</span>
                 </div>
-              </div>
-              
-              <div className="space-y-6">
-                {topRated.slice(0, 5).map((manga, index) => (
-                  <div key={manga._id} className="bg-[#1a1a1a] rounded-lg p-6 flex gap-5 items-center">
-                    <div className="text-purple-400 text-3xl font-bold w-12">
-                      0{index + 1}
-                    </div>
-                    <img
-                      src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
-                      alt={manga.title}
-                      className="w-20 h-26 object-cover flex-shrink-0 rounded"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-white text-lg font-medium mb-3">{manga.title}</h3>
-                      <div className="text-base text-gray-400 mb-3">
-                        {manga.genre?.[0]}
-                      </div>
-                      <div className="flex items-center gap-4 text-base">
-                        <span className="text-purple-400">📖 Chap {150 - index * 30}</span>
-                        <span className="text-purple-400">📚 Vol {index + 1}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Most Viewed */}
+  <div>
+    <div className="mb-6">
+      <h2 className="text-xl text-white font-semibold mb-3">Top Rated</h2>
+      {/* <div className="flex gap-2">
+        <button className="bg-purple-600 text-white px-4 py-1 text-sm rounded">Today</button>
+        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Week</button>
+        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Month</button>
+      </div> */}
+    </div>
+
+    <div className="space-y-5">
+      {topRated.slice(0, 5).map((manga, index) => (
+        <div
+          key={manga._id}
+          className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-md flex items-center p-4 gap-4"
+        >
+          <div className="text-purple-400 text-2xl font-bold w-10">0{index + 1}</div>
+          <img
+            src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
+            alt={manga.title}
+            className="w-20 h-28 object-cover rounded-xl"
+          />
+          <div className="flex-1">
+            <h3 className="text-white text-base font-semibold mb-1">{manga.title}</h3>
+            <p className="text-sm text-gray-400 mb-2">{manga.genre?.[0]}</p>
+            <div className="flex gap-3 text-sm text-purple-400">
+              <span>📖 Chap {150 - index * 30}</span>
+              <span>📚 Vol {index + 1}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
     </div>

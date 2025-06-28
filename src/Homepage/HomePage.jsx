@@ -4,15 +4,19 @@ import MangaCards from "../MangaCard/MangaCards"
 import Daily from '../components/Daily';
 import UpcomingManga from '../components/UpComing'
 import AboutUs from "../components/AboutUs";
-
+import { Element } from "react-scroll";
 const HomePage = () => {
   return (
     <>
       <HeroSection />
       <MangaCards />
       <Daily />
-      <UpcomingManga />
-      <AboutUs />
+      <Element name="upcoming">
+        <UpcomingManga />
+      </Element>
+        <Element name="aboutus">
+        <AboutUs />
+      </Element>
     </>
   );
 };

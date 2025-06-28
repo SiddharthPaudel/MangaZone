@@ -2,7 +2,8 @@ import Logo from "../images/mainlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../ContextAPI/Auth";
-import toast from 'react-hot-toast'; // ✅ Import React Hot Toast
+import toast from "react-hot-toast"; // ✅ Import React Hot Toast
+import { Link as ScrollLink } from "react-scroll";
 import {
   Dialog,
   DialogPanel,
@@ -33,12 +34,48 @@ import Avatar5 from "../icons/a5.png";
 import Avatar6 from "../icons/a6.png";
 
 const avatarIcons = {
-  1: <img src={Avatar1} alt="Avatar 1" className="h-9 w-9 rounded-full object-cover" />,
-  2: <img src={Avatar2} alt="Avatar 2" className="h-9 w-9 rounded-full object-cover" />,
-  3: <img src={Avatar3} alt="Avatar 3" className="h-9 w-9 rounded-full object-cover" />,
-  4: <img src={Avatar4} alt="Avatar 4" className="h-9 w-9 rounded-full object-cover" />,
-  5: <img src={Avatar5} alt="Avatar 5" className="h-9 w-9 rounded-full object-cover" />,
-  6: <img src={Avatar6} alt="Avatar 6" className="h-9 w-9 rounded-full object-cover" />,
+  1: (
+    <img
+      src={Avatar1}
+      alt="Avatar 1"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  2: (
+    <img
+      src={Avatar2}
+      alt="Avatar 2"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  3: (
+    <img
+      src={Avatar3}
+      alt="Avatar 3"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  4: (
+    <img
+      src={Avatar4}
+      alt="Avatar 4"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  5: (
+    <img
+      src={Avatar5}
+      alt="Avatar 5"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
+  6: (
+    <img
+      src={Avatar6}
+      alt="Avatar 6"
+      className="h-9 w-9 rounded-full object-cover"
+    />
+  ),
 };
 // const avatarIcons = {
 //   1: <GiNinjaHead className="h-9 w-9 text-white" />,
@@ -47,66 +84,64 @@ const avatarIcons = {
 //   4: <GiSpikedDragonHead className="h-9 w-9 text-white" />,
 // };
 
-
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate(); // ✅ For navigation after logout
-  
+
   const { user, logout } = useAuth(); // ✅ from context
   console.log("User in header:", user);
 
   // ✅ Enhanced logout function with toast notifications
   const handleLogout = () => {
     // Show loading toast
-    const loadingToast = toast.loading('Logging out...', {
+    const loadingToast = toast.loading("Logging out...", {
       style: {
-        borderRadius: '12px',
-        background: '#1e1e1e',
-        color: '#fff',
-        border: '1px solid #8b5cf6',
+        borderRadius: "12px",
+        background: "#1e1e1e",
+        color: "#fff",
+        border: "1px solid #8b5cf6",
       },
     });
 
     try {
       // Call the logout function from context
       logout();
-      
+
       // Show success toast
-      toast.success('Successfully logged out! See you next time! 👋', {
+      toast.success("Successfully logged out! See you next time! 👋", {
         id: loadingToast, // Replaces the loading toast
         duration: 4000,
         style: {
-          borderRadius: '12px',
-          background: '#1e1e1e',
-          color: '#fff',
-          border: '1px solid #10b981',
+          borderRadius: "12px",
+          background: "#1e1e1e",
+          color: "#fff",
+          border: "1px solid #10b981",
         },
         iconTheme: {
-          primary: '#10b981',
-          secondary: '#1e1e1e',
+          primary: "#10b981",
+          secondary: "#1e1e1e",
         },
       });
 
       // Navigate to home page after logout
       setTimeout(() => {
-        navigate('/');
+        navigate("/");
         setMobileMenuOpen(false); // Close mobile menu if open
       }, 1500);
-
     } catch (error) {
       // Show error toast if logout fails
-      toast.error('Logout failed. Please try again.', {
+      toast.error("Logout failed. Please try again.", {
         id: loadingToast,
         duration: 4000,
         style: {
-          borderRadius: '12px',
-          background: '#1e1e1e',
-          color: '#fff',
-          border: '1px solid #ef4444',
+          borderRadius: "12px",
+          background: "#1e1e1e",
+          color: "#fff",
+          border: "1px solid #ef4444",
         },
         iconTheme: {
-          primary: '#ef4444',
-          secondary: '#1e1e1e',
+          primary: "#ef4444",
+          secondary: "#1e1e1e",
         },
       });
     }
@@ -153,13 +188,15 @@ const Header = () => {
           >
             Home
           </Link>
-          <Link
-            to="/aboutus"
-            className="text-base font-semibold"
-            style={{ color: "#F3F3F3" }}
+          <ScrollLink
+            to="aboutus"
+            smooth={true}
+            duration={600}
+            offset={-80} // Adjust for fixed headers
+            className="text-base font-semibold text-white cursor-pointer"
           >
             AboutUs
-          </Link>
+          </ScrollLink>
           <Link
             to="/products"
             className="text-base font-semibold"
@@ -167,13 +204,15 @@ const Header = () => {
           >
             Manga
           </Link>
-          <Link
-            to="/productsdetails"
-            className="text-base font-semibold"
-            style={{ color: "#F3F3F3" }}
+          <ScrollLink
+            to="upcoming"
+            smooth={true}
+            duration={600}
+            offset={-80}
+            className="text-base font-semibold text-white cursor-pointer"
           >
             Upcoming
-          </Link>
+          </ScrollLink>
         </PopoverGroup>
 
         {/* 🔁 Conditional Rendering (Desktop view) */}
@@ -194,8 +233,10 @@ const Header = () => {
                 <PopoverButton className="flex items-center space-x-1 text-white hover:text-gray-300 focus:outline-none">
                   <div className="relative group">
                     <div className="h-9 w-9 rounded-full border-2 border-white bg-gray-800 flex items-center justify-center">
-  {avatarIcons[user?.avatar] || <GiNinjaHead className="h-6 w-6 text-white" />}
-</div>
+                      {avatarIcons[user?.avatar] || (
+                        <GiNinjaHead className="h-6 w-6 text-white" />
+                      )}
+                    </div>
                     {user?.name && (
                       <div className="absolute top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg z-50 whitespace-nowrap">
                         {user.name}
@@ -308,18 +349,20 @@ const Header = () => {
                 Upcoming
               </Link>
             </div>
-            
+
             {/* ✅ Mobile menu user section */}
             <div className="py-6">
               {user ? (
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3 px-3">
                     <div className="h-8 w-8 rounded-full border-2 border-white bg-gray-800 flex items-center justify-center">
-  {avatarIcons[user?.avatar] || <GiNinjaHead className="h-5 w-5 text-white" />}
-</div>
+                      {avatarIcons[user?.avatar] || (
+                        <GiNinjaHead className="h-5 w-5 text-white" />
+                      )}
+                    </div>
 
                     <span className="text-white font-semibold">
-                      {user.name || 'User'}
+                      {user.name || "User"}
                     </span>
                   </div>
                   <Link
