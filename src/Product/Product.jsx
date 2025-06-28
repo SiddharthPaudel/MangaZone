@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaFilter, FaStar } from "react-icons/fa";
-import MangaCards from "../MangaCard/MangaCards"; // keep this
+import { FaSearch, FaFilter } from "react-icons/fa";
+import MangaCards from "../MangaCard/MangaCards";
 import toast from "react-hot-toast";
 
 const Product = () => {
@@ -8,6 +8,7 @@ const Product = () => {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [showFilter, setShowFilter] = useState(false);
   const [topRated, setTopRated] = useState([]);
+  const [allMangas, setAllMangas] = useState([]);
 
   const genres = ["All Genres", "Fantasy", "Adventure", "Sci-Fi"];
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -27,6 +28,29 @@ const Product = () => {
 
     fetchTopRated();
   }, []);
+
+  // Fetch all mangas for search & filter
+  useEffect(() => {
+    const fetchAllMangas = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/manga`);
+        if (!res.ok) throw new Error("Failed to fetch all mangas");
+        const data = await res.json();
+        setAllMangas(data);
+      } catch (err) {
+        toast.error(err.message);
+      }
+    };
+
+    fetchAllMangas();
+  }, []);
+
+  // Filter logic
+  const filteredManga = allMangas.filter((manga) => {
+    const titleMatch = manga.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const genreMatch = selectedGenre ? manga.genre.includes(selectedGenre) : true;
+    return titleMatch && genreMatch;
+  });
 
   return (
     <div className="bg-900 text-white min-h-screen">
@@ -78,89 +102,80 @@ const Product = () => {
           </div>
         </div>
       </div>
-<MangaCards/>
+
+      {/* Filtered MangaCards */}
+      <MangaCards mangaList={filteredManga} />
+
       {/* Content */}
       <div className="px-6">
         <div className="max-w-6xl mx-auto">
-          {/* MangaCards */}
-          <div className="mb-12">
-           
-          </div>
-
           {/* Latest Updates & Most Viewed */}
-        {/* Latest Updates & Most Viewed */}
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 font-montserrat">
-  {/* Latest Updates */}
-  <div className="lg:col-span-2">
-    <div className="flex items-center gap-4 mb-6">
-      <h2 className="text-xl text-white font-semibold">Latest Updates</h2>
-      <div className="flex gap-2">
-        <button className="bg-purple-600 text-white px-4 py-1 text-sm rounded">Chapter</button>
-        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Volume</button>
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {topRated.slice(0, 4).map((manga, index) => (
-        <div key={manga._id} className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-lg flex gap-5 p-5">
-          <img
-            src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
-            alt={manga.title}
-            className="w-28 h-40 object-cover rounded-xl"
-          />
-          <div className="flex-1">
-            <h3 className="text-white text-lg font-semibold mb-2">{manga.title}</h3>
-            <p className="text-sm text-gray-400 mb-3">{manga.genre?.slice(0, 3).join(", ")}</p>
-            <div className="space-y-2">
-              {[0, 1, 2].map((offset) => (
-                <div key={offset} className="flex items-center gap-2 text-purple-400 text-sm">
-                  <span>📖 Chap {47 - index - offset} [EN]</span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 font-montserrat">
+            {/* Latest Updates */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-4 mb-6">
+                <h2 className="text-xl text-white font-semibold">Latest Updates</h2>
+                <div className="flex gap-2">
+                  <button className="bg-purple-600 text-white px-4 py-1 text-sm rounded">Chapter</button>
+                  <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Volume</button>
                 </div>
-              ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {topRated.slice(0, 4).map((manga, index) => (
+                  <div key={manga._id} className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-lg flex gap-5 p-5">
+                    <img
+                      src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
+                      alt={manga.title}
+                      className="w-28 h-40 object-cover rounded-xl"
+                    />
+                    <div className="flex-1">
+                      <h3 className="text-white text-lg font-semibold mb-2">{manga.title}</h3>
+                      <p className="text-sm text-gray-400 mb-3">{manga.genre?.slice(0, 3).join(", ")}</p>
+                      <div className="space-y-2">
+                        {[0, 1, 2].map((offset) => (
+                          <div key={offset} className="flex items-center gap-2 text-purple-400 text-sm">
+                            <span>📖 Chap {47 - index - offset} [EN]</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Most Viewed */}
+            <div>
+              <div className="mb-6">
+                <h2 className="text-xl text-white font-semibold mb-3">Top Rated</h2>
+              </div>
+
+              <div className="space-y-5">
+                {topRated.slice(0, 5).map((manga, index) => (
+                  <div
+                    key={manga._id}
+                    className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-md flex items-center p-4 gap-4"
+                  >
+                    <div className="text-purple-400 text-2xl font-bold w-10">0{index + 1}</div>
+                    <img
+                      src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
+                      alt={manga.title}
+                      className="w-20 h-28 object-cover rounded-xl"
+                    />
+                    <div className="flex-1">
+                      <h3 className="text-white text-base font-semibold mb-1">{manga.title}</h3>
+                      <p className="text-sm text-gray-400 mb-2">{manga.genre?.[0]}</p>
+                      <div className="flex gap-3 text-sm text-purple-400">
+                        <span>📖 Chap {150 - index * 30}</span>
+                        <span>📚 Vol {index + 1}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Most Viewed */}
-  <div>
-    <div className="mb-6">
-      <h2 className="text-xl text-white font-semibold mb-3">Top Rated</h2>
-      {/* <div className="flex gap-2">
-        <button className="bg-purple-600 text-white px-4 py-1 text-sm rounded">Today</button>
-        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Week</button>
-        <button className="text-gray-400 px-4 py-1 text-sm hover:text-white rounded">Month</button>
-      </div> */}
-    </div>
-
-    <div className="space-y-5">
-      {topRated.slice(0, 5).map((manga, index) => (
-        <div
-          key={manga._id}
-          className="bg-[#1f1f1f] rounded-2xl overflow-hidden shadow-md flex items-center p-4 gap-4"
-        >
-          <div className="text-purple-400 text-2xl font-bold w-10">0{index + 1}</div>
-          <img
-            src={`${apiUrl}/uploads/covers/${manga.coverImage}`}
-            alt={manga.title}
-            className="w-20 h-28 object-cover rounded-xl"
-          />
-          <div className="flex-1">
-            <h3 className="text-white text-base font-semibold mb-1">{manga.title}</h3>
-            <p className="text-sm text-gray-400 mb-2">{manga.genre?.[0]}</p>
-            <div className="flex gap-3 text-sm text-purple-400">
-              <span>📖 Chap {150 - index * 30}</span>
-              <span>📚 Vol {index + 1}</span>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
-
         </div>
       </div>
     </div>
