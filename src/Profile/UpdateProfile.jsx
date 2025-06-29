@@ -55,7 +55,7 @@ const UpdateProfile = ({ onClose }) => {
   });
   const [selectedAvatar, setSelectedAvatar] = useState(1);
   const [updating, setUpdating] = useState(false);
-
+   const handleClose = () => navigate("/");
   // Set form data from context user data
   useEffect(() => {
     if (user) {
@@ -186,7 +186,7 @@ const response = await fetch(`http://localhost:5000/api/auth/update/${user.id ||
       <div className="relative bg-[#1e1e1e] text-white rounded-xl shadow-lg w-full max-w-3xl flex overflow-hidden">
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white"
         >
           <FaTimes size={20} />
