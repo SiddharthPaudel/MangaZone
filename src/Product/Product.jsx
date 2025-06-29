@@ -53,7 +53,7 @@ const Product = () => {
   });
 
   return (
-    <div className="bg-900 text-white min-h-screen">
+    <div className="bg-900 text-white min-h-screen ">
       {/* Header */}
       <div className="px-6 pt-8">
         <div className="max-w-6xl mx-auto">

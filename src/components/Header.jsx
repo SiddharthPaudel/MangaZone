@@ -25,7 +25,7 @@ import {
 } from "react-icons/gi";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ProfileIcon from "../icons/profileIcon.png";
-import BookmarkIcon from "../icons/book6.png";
+import BookmarkIcon from "../icons/book1.png";
 import Avatar1 from "../icons/a1.png"; // Add your avatar images
 import Avatar2 from "../icons/a2.png";
 import Avatar3 from "../icons/a3.png";
