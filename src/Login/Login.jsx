@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import animeImage from "../images/smallguy.png";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../ContextAPI/Auth";
 import toast from "react-hot-toast";
 
@@ -25,7 +25,6 @@ const Login = () => {
     setError("");
     setIsLoading(true);
 
-    // 🍜 Show loading toast with custom manga-style
     const loadingToast = toast.loading("Entering the manga verse...", {
       style: {
         borderRadius: "12px",
@@ -41,12 +40,10 @@ const Login = () => {
         formData
       );
 
-      // ✅ Save user/token to context
       login(res.data.token, res.data.user);
 
-      // 🎉 Success toast with manga flair
       toast.success("Welcome back, manga reader! 📚✨", {
-        id: loadingToast, // Replaces the loading toast
+        id: loadingToast,
         duration: 4000,
         style: {
           borderRadius: "12px",
@@ -60,10 +57,9 @@ const Login = () => {
         },
       });
 
-      // ✅ Redirect after success
       setTimeout(() => {
         if (res.data.user.role === "admin") {
-          navigate("/admin"); // or "/admin/dashboard" if that's your route
+          navigate("/admin");
         } else {
           navigate("/");
         }
@@ -74,9 +70,8 @@ const Login = () => {
         err.response?.data?.msg || "Login failed. Please try again.";
       setError(errorMessage);
 
-      // ❌ Error toast with manga style
       toast.error(`Authentication failed! ${errorMessage} 💥`, {
-        id: loadingToast, // Replaces the loading toast
+        id: loadingToast,
         duration: 5000,
         style: {
           borderRadius: "12px",
@@ -144,6 +139,14 @@ const Login = () => {
               required
               disabled={isLoading}
             />
+            <div className="text-right mt-1">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-purple-400 hover:underline transition"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
 
           {error && (

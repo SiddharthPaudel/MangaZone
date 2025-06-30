@@ -20,7 +20,8 @@ import RentalTable from "./Admin/Rental/RentalTable";
 import MangaTable from "./Admin/Manga/MangaTable";
 import ProtectedAdminRoute from "./utils/ProtectedAdminRoutes";
 import Unauthorized from "./utils/Unauthorize";
-
+import ForgotPassword from "./ForgetPassword/ForgetPassword";
+import ResetPassword from "./ResetPassword/ResetPassword";
 import { Toaster } from 'react-hot-toast';
 
 
@@ -39,6 +40,8 @@ function App() {
           <Route path="/rent" element={<RentPage />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/rentDetails" element={<RentDetails />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Route>
 
         <Route path="/admin" element={
