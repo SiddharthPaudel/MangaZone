@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 const RentPage = () => {
-  const { state } = useLocation(); // props from ProductDetails
+  const { state } = useLocation(); // Props from ProductDetails
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -57,8 +57,29 @@ const RentPage = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to rent");
 
+      if (data.esewa) {
+        // 👉 Build and submit form to eSewa
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = data.action;
+
+        Object.entries(data.values).forEach(([key, value]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+        return;
+      }
+
+      // If not eSewa (i.e., Cash, Khalti)
       toast.success("Manga rented successfully!");
-      navigate("/"); // Redirect to homepage or your desired page
+      navigate("/");
+
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -143,7 +164,7 @@ const RentPage = () => {
             <div>
               <label className="text-sm mb-1 block">Payment Method:</label>
               <div className="flex gap-3 flex-wrap">
-                {['Cash', 'Esewa', 'Khalti'].map((method) => (
+                {['Cash', 'Esewa',].map((method) => (
                   <button
                     key={method}
                     onClick={() => setPaymentMethod(method)}

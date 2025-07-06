@@ -100,7 +100,7 @@ const RentalTable = () => {
                     <td className="px-4 py-3">{new Date(rental.rentedAt).toLocaleString()}</td>
                     <td className="px-4 py-3">{new Date(rental.expiresAt).toLocaleString()}</td>
                     <td className="px-4 py-3">{rental.phoneNumber}</td>
-                    <td className="px-4 py-3">{rental.location}</td>
+                    <td className="px-4 py-3">{rental.location ? rental.location.split('?data=')[0] : ''}</td>
                     <td className="px-4 py-3">{rental.paymentMethod}</td>
                     <td className="px-4 py-3 font-semibold text-yellow-400">Rs {rental.price}</td>
                     <td className="px-4 py-3">

@@ -22,7 +22,9 @@ import ProtectedAdminRoute from "./utils/ProtectedAdminRoutes";
 import Unauthorized from "./utils/Unauthorize";
 import ForgotPassword from "./ForgetPassword/ForgetPassword";
 import ResetPassword from "./ResetPassword/ResetPassword";
+
 import { Toaster } from 'react-hot-toast';
+import PaymentSuccess from "./Payment/PaymentSucess";
 
 
 function App() {
@@ -42,6 +44,7 @@ function App() {
           <Route path="/rentDetails" element={<RentDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/payment-success" element={<PaymentSuccess/>} />
         </Route>
 
         <Route path="/admin" element={
