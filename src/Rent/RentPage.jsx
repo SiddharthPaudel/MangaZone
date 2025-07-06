@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../ContextAPI/Auth';
 import { FaTimes } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-
+import esewa from '../images/esewa.png'
 const RentPage = () => {
   const { state } = useLocation(); // Props from ProductDetails
   const navigate = useNavigate();
@@ -161,24 +161,25 @@ const RentPage = () => {
             </div>
 
             {/* Payment Method */}
-            <div>
-              <label className="text-sm mb-1 block">Payment Method:</label>
-              <div className="flex gap-3 flex-wrap">
-                {['Cash', 'Esewa',].map((method) => (
-                  <button
-                    key={method}
-                    onClick={() => setPaymentMethod(method)}
-                    className={`px-4 py-2 text-sm rounded-full border transition ${
-                      paymentMethod === method
-                        ? 'bg-purple-600 text-white border-purple-600'
-                        : 'bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700'
-                    }`}
-                  >
-                    {method}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div>
+  <label className="text-sm mb-1 block">Payment Via</label>
+  <div className="flex gap-3 flex-wrap">
+    {[ 'Esewa'].map((method) => (
+      <button
+        key={method}
+        onClick={() => setPaymentMethod(method)}
+        className={`px-4 py-2 text-sm rounded-full border transition flex items-center gap-2 ${
+          paymentMethod === method
+            ? 'bg-purple-600 text-white border-purple-600'
+            : 'bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700'
+        }`}
+      >
+        <img src={esewa} alt="eSewa" className="w-5 h-5" />
+        {method}
+      </button>
+    ))}
+  </div>
+</div>
           </div>
 
           {/* Rent Now Button */}

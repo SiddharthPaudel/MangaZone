@@ -136,6 +136,7 @@ const ProductDetails = () => {
           },
         ],
       }));
+       setReviewText("");
     } catch (err) {
       toast.error(err.message || "Review submission failed");
     }
