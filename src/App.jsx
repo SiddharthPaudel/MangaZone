@@ -25,6 +25,7 @@ import ResetPassword from "./ResetPassword/ResetPassword";
 
 import { Toaster } from 'react-hot-toast';
 import PaymentSuccess from "./Payment/PaymentSucess";
+import SupportPage from "./components/SupportPage";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/payment-success" element={<PaymentSuccess/>} />
+          <Route path="/support" element={<SupportPage/>} />
         </Route>
 
         <Route path="/admin" element={

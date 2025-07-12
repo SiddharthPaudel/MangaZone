@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-[#121212] text-gray-300 py-12 px-6 font-montserrat">
@@ -29,12 +29,12 @@ const Footer = () => {
           <p className="text-sm text-gray-400 mb-2">
             We're here for you! If you're facing issues or have questions, reach out anytime.
           </p>
-          <a
-            href="/support"
+          <Link
+            to="/support"
             className="inline-block mt-2 text-400 hover:underline text-sm"style={{ color: '#FFC107' }}
           >
             Visit Support Page →
-          </a>
+          </Link>
         </div>
 
         {/* Social Media */}
