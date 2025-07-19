@@ -103,7 +103,7 @@ const Signup = () => {
         // Redirect after 2 seconds
         setTimeout(() => {
           navigate('/login');
-        }, 2000);
+        }, 1000);
       } else {
         toast.error(data.msg || data.error || 'Signup failed');
       }
@@ -127,14 +127,14 @@ const Signup = () => {
         toastOptions={{
           // Define default options
           className: '',
-          duration: 4000,
+          duration: 1000,
           style: {
             background: '#363636',
             color: '#fff',
           },
           // Default options for specific types
           success: {
-            duration: 4000,
+            duration: 1000,
             style: {
               background: '#10B981',
               color: '#fff',
@@ -145,7 +145,7 @@ const Signup = () => {
             },
           },
           error: {
-            duration: 4000,
+            duration: 1000,
             style: {
               background: '#EF4444',
               color: '#fff',

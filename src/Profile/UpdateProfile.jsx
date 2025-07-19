@@ -130,7 +130,7 @@ const response = await fetch(`http://localhost:5000/api/auth/update/${user.id ||
     }
     
     toast.success('Profile updated successfully! 🎉', {
-      duration: 3000,
+      duration: 1000,
       style: {
         background: '#10B981',
         color: '#fff',
